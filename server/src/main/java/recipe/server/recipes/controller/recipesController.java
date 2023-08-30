@@ -1,4 +1,4 @@
-package recipe.recipes.controller;
+package recipe.server.recipes.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

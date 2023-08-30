@@ -1,4 +1,4 @@
-package recipe.recipes.repository;
+package recipe.server.recipes.repository;
 
 public interface recipesRepository {
 }

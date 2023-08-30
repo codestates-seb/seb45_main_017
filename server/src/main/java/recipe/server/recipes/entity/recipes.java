@@ -1,4 +1,4 @@
-package recipe.recipes.entity;
+package recipe.server.recipes.entity;
 
 import lombok.*;
 
