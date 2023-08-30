@@ -1,0 +1,10 @@
+package recipe.server.member.mapper;
+
+import recipe.server.member.entity.Member;
+import recipe.server.member.dto.MemberDto;
+
+public interface MemberMapper {
+    Member memberPostDtoToMember(MemberDto.MemberPostDto requestBody);
+    Member memberPatchDtoToMember(MemberDto.MemberPatchDto requestBody);
+    MemberDto.MemberResponseDto memberToMemberResponseDto(Member member);
+}
