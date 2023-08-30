@@ -23,4 +23,15 @@ public class CommentDto {
 
         private String content;
     }
+
+    @Getter
+    @Setter
+    public static class ResponseDto {
+
+        private Long commentId;
+
+        private Long recipesId;
+
+        private String content;
+    }
 }
