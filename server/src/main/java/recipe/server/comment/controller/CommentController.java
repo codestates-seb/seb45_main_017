@@ -7,6 +7,7 @@ import recipe.server.comment.dto.CommentDto;
 import recipe.server.comment.entity.Comment;
 import recipe.server.comment.mapper.CommentMapper;
 import recipe.server.comment.service.CommentService;
+import recipe.server.recipes.service.RecipesService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -19,18 +20,27 @@ public class CommentController {
 
     private final CommentMapper commentMapper;
 
-    public CommentController(CommentService commentService, CommentMapper commentMapper) {
+    private final RecipesService recipesService;
+
+    public CommentController(CommentService commentService, CommentMapper commentMapper, RecipesService recipesService) {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
+        this.recipesService = recipesService;
     }
 
 
-//    @PostMapping
-//    public ResponseEntity postComment(@Valid @RequestBody CommentDto.CommentPostDto commentPostDto,
-//                                      @PathVariable("recipes-id") Long recipesId) {
-//
-//
-//    }
+    @PostMapping
+    public ResponseEntity postComment(@Valid @RequestBody CommentDto.CommentPostDto commentPostDto,
+                                      @PathVariable("recipes-id") Long recipesId) {
+
+        Comment comment = commentMapper.commentPostDtoToComment(commentPostDto);
+        comment.setRecipes(recipesService.findVerifiedRecipesById(recipesId));
+        Comment response = commentService.createComment(comment);
+
+        return new ResponseEntity<>(commentMapper.commentToResponseDto(response), HttpStatus.OK);
+
+
+    }
 
     @PatchMapping("/{commentId}")
     public ResponseEntity patchComment(@PathVariable("commentId") @Positive Long commentId,
