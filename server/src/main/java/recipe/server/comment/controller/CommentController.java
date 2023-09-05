@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping("/Comment")
+@RequestMapping("/recipes/{recipes-id}/comment")
 public class CommentController {
 
     private final CommentService commentService;

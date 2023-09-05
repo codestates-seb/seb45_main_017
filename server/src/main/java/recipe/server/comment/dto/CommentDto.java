@@ -32,7 +32,7 @@ public class CommentDto {
 
         private Long commentId;
 
-        private Long recipesId;
+        private long recipesId;
 
         private String content;
     }
