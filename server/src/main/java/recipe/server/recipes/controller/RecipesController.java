@@ -45,8 +45,8 @@ public class RecipesController {
      */
 
     // 레시피 삭제 (로그인 시 -> 자신이 작성한 레시피만)
-    @DeleteMapping("/{recipesId}")
-    public ResponseEntity deleteRecipes(@PathVariable("recipesId") @Positive long recipesId,
+    @DeleteMapping("/{recipe-id}")
+    public ResponseEntity deleteRecipes(@PathVariable("recipe-id") @Positive long recipesId,
                                         @Positive @RequestParam long id) {
 
         recipesService.deleteRecipes(recipesId, id);
@@ -55,8 +55,8 @@ public class RecipesController {
     }
 
     // 레시피 수정 (로그인 시 -> 자신이 작성한 레시피만)
-    @PatchMapping("/{recipesId}")
-    public ResponseEntity patchRecipes(@PathVariable("recipesId") @Positive long recipesId,
+    @PatchMapping("/{recipe-id}")
+    public ResponseEntity patchRecipes(@PathVariable("recipe-id") @Positive long recipesId,
                                        @Valid @RequestBody RecipesDto.recipesPatchDto recipesPatchDto) {
 
        recipesPatchDto.setRecipesId(recipesId);

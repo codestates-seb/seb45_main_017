@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Recipes {
+//TODO : 레시피 4가지 구성으로 고치기
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -21,6 +22,10 @@ public class Recipes {
     // 레시피 제목
     @Column(nullable = false)
     private String recipeTitle;
+
+    private String recipeType;
+
+    private String nutrition;
 
     // 레시피 내용
     // TODO : 이미지 삽입
