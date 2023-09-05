@@ -17,9 +17,11 @@ public class RecipesDto {
         private long recipesId;
         private long id;
         private String recipeTitle;
+        private String recipeType;
+        private String nutrition;
         private String recipeBody;
-        private String createAt;
-        private String modifiedAt;
+       // private String createAt;
+       // private String modifiedAt;
 
     }
 
@@ -50,6 +52,12 @@ public class RecipesDto {
         @NotBlank
         private String recipeTitle;
 
+        @NotBlank
+        private String recipeType;
+
+        @NotBlank
+        private String nutrition;
+
         @NotNull
         private String recipeBody;
     }
@@ -66,6 +74,12 @@ public class RecipesDto {
 
         @NotBlank
         private String recipeTitle;
+
+        @NotBlank
+        private String recipeType;
+
+        @NotBlank
+        private String nutrition;
 
         @NotBlank
         private String recipeBody;

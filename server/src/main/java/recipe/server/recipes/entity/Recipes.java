@@ -23,9 +23,11 @@ public class Recipes {
     @Column(nullable = false)
     private String recipeTitle;
 
-    //private String recipeType;
+    // 레시피 유형
+    private String recipeType;
 
-    //private String nutrition;
+    // 레시피 영양소
+    private String nutrition;
 
     // 레시피 내용
     // TODO : 이미지 삽입
@@ -63,6 +65,26 @@ public class Recipes {
     public void setRecipeTitle(String recipeTitle) {
 
         this.recipeTitle = recipeTitle;
+    }
+
+    public String getRecipeType() {
+
+        return recipeType;
+    }
+
+    public void setRecipeType(String recipeType) {
+
+        this.recipeType = recipeType;
+    }
+
+    public String getNutrition() {
+
+        return nutrition;
+    }
+
+    public void setNutrition(String nutrition) {
+
+        this.nutrition = nutrition;
     }
 
     public String getRecipeBody() {

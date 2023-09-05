@@ -32,7 +32,8 @@ public class RecipesController {
         return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.CREATED);
     }
 
-    //TODO : 보충 작업 필요
+    // TODO : 하나의 레시피 가져오기
+    // TODO : 모든 레시피 가져오기
     // 레시피 조회 -> 오픈 api 가져오기
 
     /*

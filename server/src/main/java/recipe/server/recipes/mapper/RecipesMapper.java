@@ -16,6 +16,8 @@ public class RecipesMapper {
         Recipes recipes = new Recipes();
 
         recipes.setRecipeTitle(recipesPostDto.getRecipeTitle());
+        recipes.setRecipeType(recipesPostDto.getRecipeType());
+        recipes.setNutrition(recipesPostDto.getNutrition());
         recipes.setRecipeBody(recipesPostDto.getRecipeBody());
 
         return recipes;
@@ -26,6 +28,8 @@ public class RecipesMapper {
         Recipes recipes = new Recipes();
 
         recipes.setRecipeTitle(recipesPatchDto.getRecipeTitle());
+        recipes.setRecipeType(recipesPatchDto.getRecipeType());
+        recipes.setNutrition(recipesPatchDto.getNutrition());
         recipes.setRecipeBody(recipesPatchDto.getRecipeBody());
         recipes.setRecipesId(recipesPatchDto.getRecipesId());
 
@@ -44,6 +48,8 @@ public class RecipesMapper {
         recipesResponseDto.setRecipesId(recipes.getRecipesId());
         recipesResponseDto.setId(recipes.getMember().getMemberId());
         recipesResponseDto.setRecipeTitle(recipes.getRecipeTitle());
+        recipesResponseDto.setRecipeType(recipes.getRecipeType());
+        recipesResponseDto.setNutrition(recipes.getNutrition());
         recipesResponseDto.setRecipeBody(recipes.getRecipeBody());
         //recipesResponseDto.setCreateAt(recipes.getCreateAt());
         //recipesResponseDto.setModifiedAt(recipes.getModifiedAt());

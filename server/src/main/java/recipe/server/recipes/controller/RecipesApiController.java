@@ -11,15 +11,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/*
 @RestController
 public class RecipesApiController {
 
-    /*
     @GetMapping("/jsonapi")
     public String callApiWithJson() {
 
         StringBuffer result = new StringBuffer();
-        String jsonPrintString = null;
 
         try {
             String apiUrl = "https://openapi.foodsafetykorea.go.kr/api?" +
@@ -29,25 +28,25 @@ public class RecipesApiController {
                     "&type = json";
 
             URL url = new URL(apiUrl);
+
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
+            urlConnection.setRequestMethod("GET");
+
+            BufferedReader br;
+
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
+
             String returnLine;
 
-            while((returnLine = bufferedReader.readLine()) != null) {
+            while((returnLine = br.readLine()) != null) {
 
-                result.append(returnLine);
+                result.append(returnLine + "\n\r");
             }
 
-            JSONObject jsonObject = XML.toJSONObject(result.toString());
-            jsonPrintString = jsonObject.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            urlConnection.disconnect();
 
-        return jsonPrintString;
+        return result.toString();
     }
-
-     */
 }
+
+ */
