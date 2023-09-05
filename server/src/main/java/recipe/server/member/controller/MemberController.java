@@ -6,22 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import recipe.server.SingleResponseDto;
-import recipe.server.UriCreator;
 import recipe.server.member.dto.MemberDto;
 import recipe.server.member.entity.Member;
 import recipe.server.member.mapper.MemberMapper;
 import recipe.server.member.service.MemberService;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/member")
 @Validated
 @Slf4j
 public class MemberController {
-  private final static String MEMBER_DEFAULT_URL = "/member";
   private final MemberService memberService;
   private final MemberMapper mapper;
 
@@ -31,23 +27,23 @@ public class MemberController {
   }
 
   @PostMapping
-  public ResponseEntity postMember(@Valid @RequestBody MemberDto.MemberPostDto memberDto) {
-    Member member = memberService.createMember(mapper.memberPostDtoToMember(memberDto));
-    URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
+  public ResponseEntity postMember(@RequestBody MemberDto.MemberPostDto memberDto) {
+    Member member = mapper.memberPostDtoToMember(memberDto);
+    Member crated = memberService.createMember(member);
 
-    return ResponseEntity.created(location).build();
+    MemberDto.MemberResponseDto responseDto = mapper.memberToMemberResponseDto(crated);
+
+    return new ResponseEntity(responseDto, HttpStatus.CREATED);
   }
 
   @PatchMapping("/{member-id}")
   public ResponseEntity patchMember(
-          @PathVariable("member-id") @Positive long memberId,
-          @Valid @RequestBody MemberDto.MemberPatchDto memberPatchDto) {
+          @PathVariable("member-id") @Positive long memberId, @RequestBody MemberDto.MemberPatchDto memberPatchDto) {
     memberPatchDto.setMemberId(memberId);
 
     Member member = memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
 
-    return new ResponseEntity<>(
-            new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)), HttpStatus.OK);
+    return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)), HttpStatus.OK);
   }
 
   @GetMapping("/{member-id}")
