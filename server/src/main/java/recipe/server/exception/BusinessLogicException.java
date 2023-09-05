@@ -1,3 +1,4 @@
+
 package recipe.server.exception;
 
 import lombok.Getter;
@@ -13,3 +14,4 @@ public class BusinessLogicException extends RuntimeException{
         this.exceptionCode = exceptionCode;
     }
 }
+

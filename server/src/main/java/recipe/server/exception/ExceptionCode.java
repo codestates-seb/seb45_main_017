@@ -1,11 +1,11 @@
+
 package recipe.server.exception;
 
 import lombok.Getter;
 
 public enum ExceptionCode {
-
-    UNAUTHORIZED_MEMBER(404, "unauthorized member"),
-    RECIPE_NOT_FOUND(404, "Recipe not found");
+    MEMBER_NOT_FOUND(404, "Member not found"),
+    MEMBER_EXISTS(409, "Member exists"),;
 
     @Getter
     private int status;
@@ -18,3 +18,4 @@ public enum ExceptionCode {
         this.message = message;
     }
 }
+

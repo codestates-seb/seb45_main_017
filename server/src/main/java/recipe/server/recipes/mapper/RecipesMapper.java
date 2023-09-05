@@ -21,6 +21,17 @@ public class RecipesMapper {
         return recipes;
     }
 
+    public Recipes recipesPatchToRecipes(RecipesDto.recipesPatchDto recipesPatchDto) {
+
+        Recipes recipes = new Recipes();
+
+        recipes.setRecipeTitle(recipesPatchDto.getRecipeTitle());
+        recipes.setRecipeBody(recipesPatchDto.getRecipeBody());
+        recipes.setRecipesId(recipesPatchDto.getRecipesId());
+
+        return recipes;
+    }
+
     public RecipesDto.recipesResponseDto recipesToRecipesResponse(Recipes recipes) {
 
         if(recipes == null) {

@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -16,18 +18,27 @@ public class Member {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long memberId;
+
 
   @Column(length = 100, nullable = false)  // 암호화되어 저장되기 때문에 길이 수정.
+  private String email;
+
+  @Column(nullable = false)
   private String password;
 
+  @Column(nullable = false, unique = true)
   private String username;
+
 
   @ElementCollection(fetch = FetchType.EAGER) // 사용자 등록 시 권한 테이블 생성.
   private List<String> roles = new ArrayList<>();
 
+  @Column(nullable = false)
+  private LocalDateTime createdAt = LocalDateTime.now();
 
-
+  @Column(nullable = false, name = "LAST_MODIFIED_AT")
+  private LocalDateTime modifiedAt = LocalDateTime.now();
 
 
 
