@@ -36,7 +36,7 @@ public class MemberService {
     Optional.ofNullable(member.getUsername())
             .ifPresent(name -> findMember.setUsername(name));
 
-    findMember.setModifiedAt(LocalDateTime.now());
+//    findMember.setModifiedAt(LocalDateTime.now());
 
     return memberRepository.save(findMember);
   }
