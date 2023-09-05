@@ -24,6 +24,8 @@ public class MemberService {
     return memberRepository.save(member);
   }
 
+
+
   // 멤버 조회 메서드
   public Member getMember(Long memberId) {
     return memberRepository.findById(memberId).orElse(null);
