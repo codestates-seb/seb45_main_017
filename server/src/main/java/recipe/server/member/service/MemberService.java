@@ -29,6 +29,7 @@ public class MemberService {
     return memberRepository.save(member);
   }
 
+
   public Member updateMember(Member member) {
     Member findMember = findVerifiedMember(member.getMemberId());
 

@@ -17,3 +17,6 @@ spring:
         show_sql: true
     hibernate:
       ddl-auto: create-drop
+  mail:
+    address:
+      admin: admin@gmail.com
