@@ -23,9 +23,9 @@ public class Recipes {
     @Column(nullable = false)
     private String recipeTitle;
 
-    private String recipeType;
+    //private String recipeType;
 
-    private String nutrition;
+    //private String nutrition;
 
     // 레시피 내용
     // TODO : 이미지 삽입

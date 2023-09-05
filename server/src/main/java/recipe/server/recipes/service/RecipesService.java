@@ -32,7 +32,7 @@ public class RecipesService {
 
     public Recipes createRecipes(Recipes recipes, long id) {
 
-        recipes.setMember(memberService.getMember(id));
+        recipes.setMember(memberService.findMember(id));
 
         return saveRecipes(recipes);
     }
@@ -40,7 +40,7 @@ public class RecipesService {
    public void deleteRecipes (long id, long recipesId) {
 
         Recipes recipes = findVerifiedRecipesById(recipesId);
-        verifyUserAuthorization(recipes.getMember().getId(), id);
+        verifyUserAuthorization(recipes.getMember().getMemberId(), id);
 
         recipesRepository.delete(recipes);
    }
@@ -49,7 +49,7 @@ public class RecipesService {
 
         Recipes foundRecipes = findRecipes(recipes.getRecipesId());
 
-        verifyUserAuthorization(id, foundRecipes.getMember().getId());
+        verifyUserAuthorization(id, foundRecipes.getMember().getMemberId());
 
         Optional.ofNullable(recipes.getRecipeTitle())
                 .ifPresent(foundRecipes::setRecipeTitle);

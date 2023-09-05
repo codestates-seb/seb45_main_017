@@ -5,7 +5,11 @@ import lombok.Getter;
 
 public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
-    MEMBER_EXISTS(409, "Member exists"),;
+    MEMBER_EXISTS(409, "Member exists"),
+
+    RECIPE_NOT_FOUND(404, "Recipe not found"),
+
+    UNAUTHORIZED_MEMBER(404, "Unquthorized member");
 
     @Getter
     private int status;
