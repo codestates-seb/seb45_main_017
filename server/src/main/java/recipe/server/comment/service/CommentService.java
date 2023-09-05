@@ -32,10 +32,12 @@ public class CommentService {
         return findComment;
     }
 
+    // 조회 코드 임시
     public Comment findComment(Long commentId) {
         return findVerifiedComment(commentId);
     }
 
+    // 조회 코드 임시
     public List<Comment> findComments() {
         return commentRepository.findAll();
     }

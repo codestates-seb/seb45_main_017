@@ -1,3 +1,4 @@
+
 package recipe.server.exception;
 
 import lombok.Getter;
@@ -17,3 +18,4 @@ public enum ExceptionCode {
         this.message = message;
     }
 }
+
