@@ -43,8 +43,6 @@ public class Member {
   @Column(nullable = false, name = "LAST_MODIFIED_AT")
   private LocalDateTime modifiedAt = LocalDateTime.now();
 
-
-
    //TODO : 맞는지 확인 부탁드려요.
 
     // Recipe와의 OneToMany 관계 설정
