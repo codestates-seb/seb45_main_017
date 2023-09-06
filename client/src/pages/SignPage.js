@@ -49,28 +49,59 @@ const SignPage = () => {
     }
   };
 
-  const onValid = ({ username, email, password }) => {
-    const formData = { username, email, password };
-    axios.post('api', formData);
-    navigate('/login');
+  const onValid = async ({ username, email, memberId, password }) => {
+    try {
+      const formData = { username, email, memberId, password };
+      await axios.post('api', formData);
+      navigate('/login');
+    } catch (error) {
+      alert('이미 존재하는 아이디입니다.');
+      console.log(error);
+    }
   };
 
   return (
     <Container>
       <form onSubmit={handleSubmit(onValid)}>
         <input
-          {...register('username', { required: '유저명을 입력해주세요' })}
+          {...register('username', {
+            required: '유저명을 입력해주세요',
+            minLength: { value: 2, message: '최소 2글자를 입력해야 합니다.' },
+          })}
           placeholder="유저명"
         ></input>
         <span>{errors?.username?.message}</span>
         <input
-          {...register('email', { required: '이메일을 입력해주세요' })}
+          {...register('email', {
+            required: '이메일을 입력해주세요',
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: '올바른 이메일 형식을 입력해주세요',
+            },
+          })}
           placeholder="이메일"
           type="email"
         ></input>
         <span> {errors?.email?.message}</span>
         <input
-          {...register('password', { required: '패스워드를 입력해주세요' })}
+          {...register('memberId', {
+            required: '아이디를 입력해주세요',
+            minLength: {
+              value: 6,
+              message: '최소 6글자 이상 입력해주세요',
+            },
+          })}
+          placeholder="아이디"
+        ></input>
+        <span> {errors?.password?.message}</span>
+        <input
+          {...register('password', {
+            required: '패스워드를 입력해주세요',
+            minLength: {
+              value: 8,
+              message: '최소 8글자 이상 입력해주세요',
+            },
+          })}
           placeholder="패스워드"
           type="password"
         ></input>
