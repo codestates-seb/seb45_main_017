@@ -55,12 +55,12 @@ public class SecurityConfiguration {
                         /**
                          * 회원 권한 설정.
                          */
-                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
-                        .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
-                        .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
+//                        .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
+//                        .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
+//                        .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
                         .anyRequest().permitAll()
 
 

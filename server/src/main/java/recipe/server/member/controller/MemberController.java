@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import recipe.server.SingleResponseDto;
+import recipe.server.member.dto.SingleResponseDto;
 import recipe.server.member.dto.MemberDto;
 import recipe.server.member.entity.Member;
 import recipe.server.member.mapper.MemberMapper;
