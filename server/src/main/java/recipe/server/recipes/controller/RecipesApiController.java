@@ -2,6 +2,7 @@ package recipe.server.recipes.controller;
 
 //import org.json.JSONObject;
 //import org.json.XML;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,19 +35,37 @@ public class RecipesApiController {
 
             BufferedReader br;
 
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
 
             String returnLine;
 
-            while((returnLine = br.readLine()) != null) {
+            while ((returnLine = br.readLine()) != null) {
 
                 result.append(returnLine + "\n\r");
             }
 
             urlConnection.disconnect();
 
-        return result.toString();
+            return result.toString();
+        }
+    }
+
+    public void init(String jsonData) {
+
+        try {
+
+            JSONObject jOb1;
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObj = (JSONObject) jsonParser.parse(jsonData);
+            JSONObject parseResponse = (JSONObject) jsonObj.get("response");
+            JSONObject parseBody = (JSONObject) parseResponse.get("body");
+            JSONArray array = (JSONArray) parseBody.get("items");
+
+            for(int i = 0; i < array.size(); i++){
+
+            }
     }
 }
 
  */
+

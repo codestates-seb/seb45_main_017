@@ -1,4 +1,4 @@
 package recipe.server.myPage.mapper;
 
-public class MypageMapper {
+public class MyPageMapper {
 }

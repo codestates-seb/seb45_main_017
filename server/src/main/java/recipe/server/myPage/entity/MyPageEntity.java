@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import recipe.server.member.entity.Member;
+import recipe.server.recipes.entity.Recipes;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MypageEntity {
+public class MyPageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +26,7 @@ public class MypageEntity {
     @JoinColumn(name = "id")
     private Member member;
 
-   // @ManyToOne(targetEntity = )
+    @ManyToOne(targetEntity = Recipes.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipesId")
+    private Recipes recipes;
 }

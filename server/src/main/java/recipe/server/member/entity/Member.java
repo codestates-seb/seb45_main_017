@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import recipe.server.comment.entity.Comment;
-import recipe.server.myPage.entity.MypageEntity;
+import recipe.server.myPage.entity.MyPageEntity;
 import recipe.server.recipes.entity.Recipes;
 
 import javax.persistence.*;
@@ -57,5 +57,5 @@ public class Member {
 
     // MyPage와의 OneToOne 관계 설정
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private MypageEntity myPage;
+    private MyPageEntity myPage;
 }

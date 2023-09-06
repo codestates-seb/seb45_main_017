@@ -6,6 +6,7 @@ import recipe.server.member.entity.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class Recipes {
 
     @Column(nullable = true)
     private LocalDateTime modifiedAt;
+
 
     @ManyToOne (targetEntity = Member.class,  fetch = FetchType.LAZY)
     @JoinColumn (name = "id")
@@ -96,6 +98,7 @@ public class Recipes {
 
         this.recipeBody = recipeBody;
     }
+
     public Member getMember() {
 
         return member;
@@ -104,6 +107,15 @@ public class Recipes {
     public void setMember(Member member) {
 
         this.member = member;
+    }
+
+    public String getCreateAt() {
+        return createAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public String getModifiedAt() {
+
+        return modifiedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     //api 가져오기

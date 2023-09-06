@@ -1,6 +1,10 @@
 package recipe.server.recipes.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recipe.server.exception.BusinessLogicException;
@@ -30,6 +34,19 @@ public class RecipesService {
 
      */
 
+    public Page<Recipes> findAllRecipes(int pageNumber, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber -1, pageSize, Sort.by("recipesId").descending());
+        Page<Recipes> recipes = recipesRepository.findAll(pageable);
+
+        return recipes;
+    }
+
+    public Recipes findRecipe(long recipesId) {
+
+        return findVerifiedRecipesById(recipesId);
+    }
+
     public Recipes createRecipes(Recipes recipes, long id) {
 
         recipes.setMember(memberService.findMember(id));
@@ -37,7 +54,7 @@ public class RecipesService {
         return saveRecipes(recipes);
     }
 
-   public void deleteRecipes (long id, long recipesId) {
+   public void deleteRecipes ( long id,long recipesId) {
 
         Recipes recipes = findVerifiedRecipesById(recipesId);
         verifyUserAuthorization(recipes.getMember().getMemberId(), id);
@@ -53,6 +70,10 @@ public class RecipesService {
 
         Optional.ofNullable(recipes.getRecipeTitle())
                 .ifPresent(foundRecipes::setRecipeTitle);
+        Optional.ofNullable(recipes.getRecipeType())
+                        .ifPresent(foundRecipes::setRecipeType);
+        Optional.ofNullable(recipes.getNutrition())
+                        .ifPresent(foundRecipes::setNutrition);
         Optional.ofNullable(recipes.getRecipeBody())
                 .ifPresent(foundRecipes::setRecipeBody);
 
