@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import recipe.server.auth.dto.LoginDto;
 import recipe.server.auth.jwt.JwtTokenizer;
 import recipe.server.member.entity.Member;
-
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +25,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+
     }
 
     @SneakyThrows
@@ -54,8 +54,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-
-    }
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();

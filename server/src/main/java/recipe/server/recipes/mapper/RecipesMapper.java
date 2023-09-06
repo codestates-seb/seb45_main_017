@@ -1,8 +1,13 @@
 package recipe.server.recipes.mapper;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import recipe.server.recipes.dto.RecipesDto;
 import recipe.server.recipes.entity.Recipes;
+import recipe.server.utils.PageInfo;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class RecipesMapper {
@@ -51,9 +56,36 @@ public class RecipesMapper {
         recipesResponseDto.setRecipeType(recipes.getRecipeType());
         recipesResponseDto.setNutrition(recipes.getNutrition());
         recipesResponseDto.setRecipeBody(recipes.getRecipeBody());
-        //recipesResponseDto.setCreateAt(recipes.getCreateAt());
-        //recipesResponseDto.setModifiedAt(recipes.getModifiedAt());
+       // recipesResponseDto.setCreateAt(recipes.getCreateAt());
+       // recipesResponseDto.setModifiedAt(recipes.getModifiedAt());
 
         return recipesResponseDto;
+    }
+
+    public RecipesDto.PageResponseDto recipesPageToPageResponseDto(Page<Recipes> recipes) {
+
+        if(recipes == null){
+
+            return null;
+        }
+        else {
+
+            RecipesDto.PageResponseDto pageResponseDto = new RecipesDto.PageResponseDto();
+
+            List<RecipesDto.recipesResponseDto> pageResponseDtos = recipes
+                    .stream()
+                    .map(recipe -> recipesToRecipesResponse(recipe))
+                    .collect(Collectors.toList());
+
+            pageResponseDto.setRecipes(pageResponseDtos);
+            pageResponseDto.setPageInfo(PageInfo.builder()
+                    .pageNumber(recipes.getNumber() + 1)
+                    .pageSize(recipes.getSize())
+                    .totalElements(recipes.getTotalElements())
+                    .totalPages(recipes.getTotalPages())
+                    .build());
+
+            return pageResponseDto;
+        }
     }
 }

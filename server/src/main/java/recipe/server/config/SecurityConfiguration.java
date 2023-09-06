@@ -61,6 +61,15 @@ public class SecurityConfiguration {
         this.jwtTokenizer = jwtTokenizer;
     }
 
+    private final JwtTokenizer jwtTokenizer;
+
+    private final CustomAuthorityUtils authorityUtils;
+
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
+        this.jwtTokenizer = jwtTokenizer;
+        this.authorityUtils = authorityUtils;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -68,12 +77,25 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())  // Cors 설정 추가
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 세션 생성 (X)
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        /**
+                         * 회원 권한 설정.
+                         */
+                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
                         .anyRequest().permitAll()
+
+
                 );
         return http.build();
     }

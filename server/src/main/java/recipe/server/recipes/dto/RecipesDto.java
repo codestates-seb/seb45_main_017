@@ -2,11 +2,13 @@ package recipe.server.recipes.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import recipe.server.utils.PageInfo;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class RecipesDto {
 
@@ -20,8 +22,8 @@ public class RecipesDto {
         private String recipeType;
         private String nutrition;
         private String recipeBody;
-       // private String createAt;
-       // private String modifiedAt;
+        private String createAt;
+        private String modifiedAt;
 
     }
 
@@ -83,5 +85,13 @@ public class RecipesDto {
 
         @NotBlank
         private String recipeBody;
+    }
+
+    @Getter
+    @Setter
+    public static class PageResponseDto {
+
+        private List<recipesResponseDto> recipes;
+        private PageInfo pageInfo;
     }
 }

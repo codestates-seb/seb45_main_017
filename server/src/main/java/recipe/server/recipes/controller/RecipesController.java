@@ -1,6 +1,7 @@
 package recipe.server.recipes.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +23,13 @@ public class RecipesController {
     private final RecipesService recipesService;
     private final RecipesMapper recipesMapper;
 
+    // TODO : 모든 레시피 get, delete
+
     // 레시피 작성 (로그인 시)
     @PostMapping
     public ResponseEntity postRecipes(@Valid @RequestBody RecipesDto.recipesPostDto recipesPostDto) {
 
-        Recipes recipes = recipesService.createRecipes(recipesMapper.recipesPostToRecipes(recipesPostDto),
-                recipesPostDto.getId());
+        Recipes recipes = recipesService.createRecipes(recipesMapper.recipesPostToRecipes(recipesPostDto), recipesPostDto.getId());
 
         return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.CREATED);
     }
@@ -45,14 +47,23 @@ public class RecipesController {
 
      */
 
-    // 레시피 삭제 (로그인 시 -> 자신이 작성한 레시피만)
-    @DeleteMapping("/{recipe-id}")
-    public ResponseEntity deleteRecipes(@PathVariable("recipe-id") @Positive long recipesId,
-                                        @Positive @RequestParam long id) {
+    // 한 개의 레시피만 조회
+    @GetMapping("/{recipe-id}")
+    public ResponseEntity getRecipes(@PathVariable("recipe-id") @Positive long recipesId) {
 
-        recipesService.deleteRecipes(recipesId, id);
+        Recipes recipes = recipesService.findRecipe(recipesId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.OK);
+    }
+
+    // 모든 레시피 조회
+    @GetMapping
+    public ResponseEntity findAllRecipes(@RequestParam @Positive int pageNumber,
+                                         @RequestParam @Positive int pageSize) {
+
+        Page<Recipes> recipes = recipesService.findAllRecipes(pageNumber, pageSize);
+        RecipesDto.PageResponseDto pageResponseDto = recipesMapper.recipesPageToPageResponseDto(recipes);
+        return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
     }
 
     // 레시피 수정 (로그인 시 -> 자신이 작성한 레시피만)
@@ -60,13 +71,26 @@ public class RecipesController {
     public ResponseEntity patchRecipes(@PathVariable("recipe-id") @Positive long recipesId,
                                        @Valid @RequestBody RecipesDto.recipesPatchDto recipesPatchDto) {
 
-       recipesPatchDto.setRecipesId(recipesId);
-       Recipes recipes = recipesService.updateRecipes(recipesMapper.recipesPatchToRecipes(recipesPatchDto),
-               recipesPatchDto.getId());
+        recipesPatchDto.setRecipesId(recipesId);
+        Recipes recipes = recipesService.updateRecipes(recipesMapper.recipesPatchToRecipes(recipesPatchDto),
+                recipesPatchDto.getId());
 
-       return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.OK);
+        return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.OK);
     }
 
-    // 레시피 검색 -> 필터
-    // 레시피 추천
+
+    // 레시피 삭제 (로그인 시 -> 자신이 작성한 레시피만)
+    @DeleteMapping("/{recipe-id}")
+    public ResponseEntity deleteRecipes(@PathVariable("recipe-id") @Positive long recipesId,
+                                        @Positive @RequestParam long id) {
+
+        {
+            recipesService.deleteRecipes(recipesId, id);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        // 레시피 검색 -> 필터
+        // 레시피 추천
+    }
 }

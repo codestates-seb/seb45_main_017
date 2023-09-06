@@ -1,4 +1,4 @@
 package recipe.server.myPage.service;
 
-public class MypageService {
+public class MyPageService {
 }
