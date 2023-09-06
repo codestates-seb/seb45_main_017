@@ -41,4 +41,11 @@ public class MemberDto {
     private String username;
   }
 
+  @Getter
+  @Setter
+  public static class MemberLoginDto {
+    private String username;
+    private String password;
+  }
+
 }

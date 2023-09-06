@@ -3,6 +3,9 @@ package recipe.server.member.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import recipe.server.SingleResponseDto;
@@ -11,6 +14,8 @@ import recipe.server.member.entity.Member;
 import recipe.server.member.mapper.MemberMapper;
 import recipe.server.member.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
@@ -25,6 +30,46 @@ public class MemberController {
     this.memberService = memberService;
     this.mapper = mapper;
   }
+
+  @PostMapping("/login")
+  public ResponseEntity loginMember(@RequestBody MemberDto.MemberLoginDto loginDto) {
+    return new ResponseEntity("Login successful!", HttpStatus.OK);
+  }
+
+  @GetMapping("/logout")
+  public ResponseEntity logoutMember(HttpServletRequest request) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null) {
+      new SecurityContextLogoutHandler().logout(request, null, auth);
+    }
+
+    return new ResponseEntity("Logout successful!", HttpStatus.OK);
+  }
+
+
+//  @PostMapping("/login")
+//  public String registerMember(@Valid MemberDto.MemberPostDto requestBody) {
+//    Member member = mapper.memberPostDtoToMember(requestBody);
+//    memberService.createMember(member);
+//
+//    System.out.println("Member Registration Successfully");
+//    return "login";
+//  }
+
+//  @PostMapping("/login")
+//  public ResponseEntity loginMember(@RequestBody MemberDto.MemberLoginDto loginDto) {
+//    return new ResponseEntity("Login successful!", HttpStatus.OK);
+//  }
+//
+//  @GetMapping("/logout")
+//  public ResponseEntity logoutMember(HttpServletRequest request) {
+//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//    if (auth != null) {
+//      new SecurityContextLogoutHandler().logout(request, null, auth);
+//    }
+//
+//    return new ResponseEntity("Logout successful!", HttpStatus.OK);
+//  }
 
   @PostMapping
   public ResponseEntity postMember(@RequestBody MemberDto.MemberPostDto memberDto) {

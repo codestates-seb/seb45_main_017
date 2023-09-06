@@ -9,13 +9,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import recipe.server.auth.dto.LoginDto;
 import recipe.server.auth.jwt.JwtTokenizer;
 import recipe.server.member.entity.Member;
-import recipe.server.member.repository.MemberRepository;
-
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +22,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public final JwtTokenizer jwtTokenizer;
 
-//    private final MemberRepository memberRepository;
-
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
-//        this.memberRepository = memberRepository;
+
     }
 
     @SneakyThrows
@@ -43,10 +37,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-//
-//        Member member = memberRepository.findByEmail(loginDto.getUsername()).orElseThrow();
-
-
 
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -55,7 +45,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) throws ServletException, IOException {
+                                            Authentication authResult) {
 
         Member member = (Member) authResult.getPrincipal();
 
@@ -64,10 +54,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
-
-        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
-
-    }
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
