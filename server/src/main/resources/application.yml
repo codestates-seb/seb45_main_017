@@ -17,6 +17,11 @@ spring:
         show_sql: true
     hibernate:
       ddl-auto: create-drop
-  mail:
-    address:
-      admin: admin@gmail.com
+mail:
+  address:
+    admin: admin@gmail.com
+
+jwt:
+  key: codedkowksmdlalskdkfkdksdkoekskdkmvzls3dksz2sld
+  access-token-expiration-minutes: 300
+  refresh-token-expiration-minutes: 600
