@@ -1,4 +1,4 @@
-package recipe.server.auth;
+package recipe.server.auth.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class AuthorityUtils {
+public class CustomAuthorityUtils {
 
     @Value("admin@gmail.com")
     private String adminMailAddress;
@@ -33,8 +33,6 @@ public class AuthorityUtils {
                 .collect(Collectors.toList());
         return authorities;
     }
-
-
 
 
 }

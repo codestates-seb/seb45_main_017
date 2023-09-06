@@ -59,3 +59,4 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MypageEntity myPage;
 }
+
