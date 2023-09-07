@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     element: <MyPage />,
   },
   {
-    path: '/recipe-des',
+    path: '/recipe-des/:id',
     element: <RecipeDes />,
   },
   {
