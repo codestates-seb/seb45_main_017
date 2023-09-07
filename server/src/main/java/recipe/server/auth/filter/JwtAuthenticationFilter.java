@@ -5,16 +5,22 @@ import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import recipe.server.auth.dto.LoginDto;
 import recipe.server.auth.jwt.JwtTokenizer;
 import recipe.server.member.entity.Member;
+import recipe.server.member.repository.MemberRepository;
+
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -22,9 +28,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public final JwtTokenizer jwtTokenizer;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+    private final MemberRepository memberRepository;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, MemberRepository memberRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        this.memberRepository = memberRepository;
 
     }
 
@@ -35,8 +44,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ObjectMapper objectMapper = new ObjectMapper();
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
+//        Member member = memberRepository.findByEmail(loginDto.getUsername()).orElseThrow();
+        Optional<Member> optionalMember = memberRepository.findByEmail(loginDto.getUsername());
+
+        if (optionalMember.isEmpty()) {
+            // 사용자가 존재하지 않음을 알리는 예외 처리
+            throw new UsernameNotFoundException("User not found with username: " + loginDto.getUsername());
+        }
+
+        Member member = optionalMember.get();
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+
+
 
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -45,7 +66,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) {
+                                            Authentication authResult) throws ServletException, IOException {
 
         Member member = (Member) authResult.getPrincipal();
 
@@ -54,6 +75,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+
+        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
+
+    }
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();

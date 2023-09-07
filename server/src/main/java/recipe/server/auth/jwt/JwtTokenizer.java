@@ -8,8 +8,9 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 
 import lombok.Getter;
-import lombok.Value;
+//import lombok.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -17,19 +18,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-@Component
+@Component()
 public class JwtTokenizer {
 
     @Getter
-//    @Value("${jwt.key}")
+    @Value("${jwt.key}")
     private String secretKey;
 
     @Getter
-//    @Value("${jwt.access-token-expiration-minutes}")
+    @Value("${jwt.access-token-expiration-minutes}")
     private int accessTokenExpirationMinutes;
 
     @Getter
-//    @Value("${jwt.refresh-token-expiration-minutes}")
+    @Value("${jwt.refresh-token-expiration-minutes}")
     private int refreshTokenExpirationMinutes;
 
     public String encodeBase64SecretKey(String secretKey) {

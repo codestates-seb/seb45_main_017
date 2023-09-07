@@ -1,4 +1,4 @@
-package recipe.server;
+package recipe.server.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

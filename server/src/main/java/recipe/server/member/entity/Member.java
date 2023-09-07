@@ -23,11 +23,10 @@ public class Member {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long memberId;
 
-
-  @Column(length = 100, nullable = false)  // 암호화되어 저장되기 때문에 길이 수정.
+  @Column(nullable = false)
   private String email;
 
-  @Column(nullable = false)
+  @Column(length = 100, nullable = false)  // 암호화되어 저장되기 때문에 길이 수정.
   private String password;
 
   @Column(nullable = false, unique = true)
