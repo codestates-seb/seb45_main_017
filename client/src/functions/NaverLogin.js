@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const clientId = process.env.NAVER_CLIENT_ID;
-const redirectId = process.env.NAVER_REDIRECT_ID;
+const clientId = process.env.REACT_APP_NAVER_CLIENT_ID;
+const redirectId = process.env.REACT_APP_NAVER_REDIRECTURL;
 const state = 'true';
 const naverAuthUrl =
   'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' +
