@@ -4,6 +4,9 @@ import LoginForm from '../components/Login/LoginForm';
 import SocialBox from '../components/Login/SocialBox';
 import { useEffect } from 'react';
 
+import { getKakaoToken } from '../functions/KakaoLogin';
+import { getNaverToken } from '../functions/NaverLogin';
+
 const Body = styled.div`
   display: flex;
   align-items: center;
@@ -23,6 +26,18 @@ const Container = styled.div`
 
 const LoginPage = () => {
   // 페이지 로드 시 소셜 로그인 조건을 충족하면 해당하는 소셜 로그인 기능 작동
+  useEffect(() => {
+    let params = new URL(window.location.href).searchParams;
+    let code = params.get('code');
+    const kakaoLoggedIn = localStorage.getItem('kakaoLoggedIn');
+    const naverLoggedIn = localStorage.getItem('naverLoggedIn');
+    if (code && kakaoLoggedIn) {
+      getKakaoToken(code);
+    }
+    if (code && naverLoggedIn) {
+      getNaverToken(code);
+    }
+  }, []);
 
   return (
     <Body>

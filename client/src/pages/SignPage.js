@@ -49,10 +49,14 @@ const SignPage = () => {
     }
   };
 
-  const onValid = async ({ username, email, memberId, password }) => {
+  const onValid = async ({ username, email, password }) => {
     try {
-      const formData = { username, email, memberId, password };
-      await axios.post('api', formData);
+      const formData = { username, email, password };
+      console.log(formData);
+      await axios.post(
+        'https://4e4e-210-97-104-152.ngrok-free.app/member',
+        formData,
+      );
       navigate('/login');
     } catch (error) {
       alert('이미 존재하는 아이디입니다.');
@@ -83,17 +87,7 @@ const SignPage = () => {
           type="email"
         ></input>
         <span> {errors?.email?.message}</span>
-        <input
-          {...register('memberId', {
-            required: '아이디를 입력해주세요',
-            minLength: {
-              value: 6,
-              message: '최소 6글자 이상 입력해주세요',
-            },
-          })}
-          placeholder="아이디"
-        ></input>
-        <span> {errors?.password?.message}</span>
+
         <input
           {...register('password', {
             required: '패스워드를 입력해주세요',

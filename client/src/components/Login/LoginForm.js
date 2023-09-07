@@ -26,15 +26,23 @@ const LoginFormComponent = styled.div`
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   // 로그인 폼 제출 시 작동 함수
   const onValid = async (data) => {
     try {
-      const res = await axios.post('login_API', data);
+      // 백엔드 측 access_token 완료될 때까지 주석 처리
+      const res = await axios.post(
+        'https://4e4e-210-97-104-152.ngrok-free.app/member/login',
+        data,
+      );
       const { access_token } = res.data;
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-      localStorage.setItem('access_token ', access_token);
+      localStorage.setItem('access_token', access_token);
       navigate('/');
     } catch (error) {
       alert('입력한 아이디 혹은 비밀번호가 올바른지 확인해주십시요');
@@ -46,12 +54,12 @@ const LoginForm = () => {
     <LoginFormComponent>
       <form onSubmit={handleSubmit(onValid)}>
         <input
-          {...register('memberId', {
+          {...register('email', {
             required: '아이디를 입력해주세요',
           })}
-          placeholder="아이디"
+          placeholder="이메일"
         ></input>
-        <span> {errors?.memberId?.message}</span>
+        <span> {errors?.email?.message}</span>
         <input
           {...register('password', {
             required: '비밀번호를 입력해주세요',
