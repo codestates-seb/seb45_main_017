@@ -34,5 +34,4 @@ public class CustomAuthorityUtils {
         return authorities;
     }
 
-
 }
