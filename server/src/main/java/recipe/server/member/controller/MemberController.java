@@ -31,46 +31,6 @@ public class MemberController {
     this.mapper = mapper;
   }
 
-  @PostMapping("/login")
-  public ResponseEntity loginMember(@RequestBody MemberDto.MemberLoginDto loginDto) {
-    return new ResponseEntity("Login successful!", HttpStatus.OK);
-  }
-
-  @GetMapping("/logout")
-  public ResponseEntity logoutMember(HttpServletRequest request) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth != null) {
-      new SecurityContextLogoutHandler().logout(request, null, auth);
-    }
-
-    return new ResponseEntity("Logout successful!", HttpStatus.OK);
-  }
-
-
-//  @PostMapping("/login")
-//  public String registerMember(@Valid MemberDto.MemberPostDto requestBody) {
-//    Member member = mapper.memberPostDtoToMember(requestBody);
-//    memberService.createMember(member);
-//
-//    System.out.println("Member Registration Successfully");
-//    return "login";
-//  }
-
-//  @PostMapping("/login")
-//  public ResponseEntity loginMember(@RequestBody MemberDto.MemberLoginDto loginDto) {
-//    return new ResponseEntity("Login successful!", HttpStatus.OK);
-//  }
-//
-//  @GetMapping("/logout")
-//  public ResponseEntity logoutMember(HttpServletRequest request) {
-//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//    if (auth != null) {
-//      new SecurityContextLogoutHandler().logout(request, null, auth);
-//    }
-//
-//    return new ResponseEntity("Logout successful!", HttpStatus.OK);
-//  }
-
   @PostMapping
   public ResponseEntity postMember(@RequestBody MemberDto.MemberPostDto memberDto) {
     Member member = mapper.memberPostDtoToMember(memberDto);
@@ -106,36 +66,3 @@ public class MemberController {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
-//@RestController
-//@RequestMapping("/member")
-//public class MemberController {
-//
-//  private final MemberService memberService;
-//  private final MemberMapper mapper;
-//
-//  @Autowired
-//  public MemberController(MemberService memberService, MemberMapper mapper) {
-//    this.memberService = memberService;
-//    this.mapper = mapper;
-//  }
-//
-//  @PostMapping
-//  public Member createMember(@RequestBody MemberDto.MemberPostDto requestBody) {
-//    return memberService.createMember(requestBody);
-//  }
-//
-//  @GetMapping("/{member-id}")
-//  public Member getMember(@PathVariable Long memberId) {
-//    return memberService.getMember(memberId);
-//  }
-//
-//  @PatchMapping("/{member-id}")
-//  public Member updateMember(@PathVariable Long memberId, @RequestBody MemberDto.MemberPatchDto memberPatchDto) {
-//    return memberService.updateMember(memberId, memberPatchDto);
-//  }
-//
-//  @DeleteMapping("/{member-id}")
-//  public void deleteMember(@PathVariable Long memberId) {
-//    memberService.deleteMember(memberId);
-//  }
-//}
