@@ -54,7 +54,7 @@ const SignPage = () => {
       const formData = { username, email, password };
       console.log(formData);
       await axios.post(
-        'https://4e4e-210-97-104-152.ngrok-free.app/member',
+        'https://b151-119-69-252-33.ngrok-free.app/member',
         formData,
       );
       navigate('/login');
