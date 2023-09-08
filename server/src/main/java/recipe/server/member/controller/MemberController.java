@@ -31,20 +31,20 @@ public class MemberController {
     this.mapper = mapper;
   }
 
-  @PostMapping("/login")
-  public ResponseEntity loginMember(@RequestBody MemberDto.MemberLoginDto loginDto) {
-    return new ResponseEntity("Login successful!", HttpStatus.OK);
-  }
+//  @PostMapping("/login")
+//  public ResponseEntity loginMember(@RequestBody MemberDto.MemberLoginDto loginDto) {
+//    return new ResponseEntity("Login successful!", HttpStatus.OK);
+//  }
 
-  @GetMapping("/logout")
-  public ResponseEntity logoutMember(HttpServletRequest request) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth != null) {
-      new SecurityContextLogoutHandler().logout(request, null, auth);
-    }
-
-    return new ResponseEntity("Logout successful!", HttpStatus.OK);
-  }
+//  @GetMapping("/logout")
+//  public ResponseEntity logoutMember(HttpServletRequest request) {
+//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//    if (auth != null) {
+//      new SecurityContextLogoutHandler().logout(request, null, auth);
+//    }
+//
+//    return new ResponseEntity("Logout successful!", HttpStatus.OK);
+//  }
 
 
 //  @PostMapping("/login")

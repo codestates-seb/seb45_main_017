@@ -2,6 +2,7 @@ package recipe.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -51,6 +52,9 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())  // Cors 설정 추가
+                // Cors 에러시 모든 허용이라 나중에 코드 뺴고 설정추가로 수정해야 될 수도 있어요.
+                .cors(configuration -> configuration
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 세션 생성 (X)
                 .and()
                 .formLogin().disable()
@@ -61,12 +65,12 @@ public class SecurityConfiguration {
                         /**
                          * 회원 권한 설정.
                          */
-//                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
-//                        .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
-//                        .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
-//                        .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
                         .anyRequest().permitAll()
 
 
@@ -99,7 +103,7 @@ public class SecurityConfiguration {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, memberRepository);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
