@@ -24,8 +24,8 @@ public class RecipesApiController {
         try {
             String apiUrl = "https://openapi.foodsafetykorea.go.kr/api?" +
                     "serviceKey= " +
-                    "pageNo = 0" +
-                    "&numOfRows = 0" +
+                    "pageNo = 1" +
+                    "&numOfRows = 8" +
                     "&type = json";
 
             URL url = new URL(apiUrl);

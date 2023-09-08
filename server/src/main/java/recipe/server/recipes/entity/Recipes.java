@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Recipes {
-//TODO : 레시피 4가지 구성으로 고치기
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -117,6 +116,4 @@ public class Recipes {
 
         return modifiedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
-
-    //api 가져오기
 }

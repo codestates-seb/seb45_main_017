@@ -1,5 +1,6 @@
 package recipe.server.recipes.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import recipe.server.utils.PageInfo;
@@ -27,23 +28,16 @@ public class RecipesDto {
 
     }
 
-    /*
-    @Getter
-    public static class recipesGetDto {
-
-        @NotBlank
-        private String startIdx; //요청시작위치
-        @NotBlank
-        private String endIdx; //요청종료위치
+    @Data
+    public static class recipesApiGetDto {
 
         private String RCP_NM; //메뉴명
-
+        private String RCP_WAY2; //조리방법
         private String RCP_PARTS_DTLS; //재료정보
-
         private String RCP_PAT2; //요리종류
+        private String INFO_ENG; //열량
+        private String HASH_TAG; // 해쉬태그
     }
-
-     */
 
     @Getter
     public static class recipesPostDto {

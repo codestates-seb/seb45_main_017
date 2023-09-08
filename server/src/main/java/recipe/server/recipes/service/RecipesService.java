@@ -36,7 +36,7 @@ public class RecipesService {
 
     public Page<Recipes> findAllRecipes(int pageNumber, int pageSize) {
 
-        Pageable pageable = PageRequest.of(pageNumber -1, pageSize, Sort.by("recipesId").descending());
+        Pageable pageable = PageRequest.of(pageNumber -1, pageSize, Sort.by("recipesId"));
         Page<Recipes> recipes = recipesRepository.findAll(pageable);
 
         return recipes;
