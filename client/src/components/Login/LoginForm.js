@@ -36,8 +36,9 @@ const LoginForm = () => {
   const onValid = async (data) => {
     try {
       // 백엔드 측 access_token 완료될 때까지 주석 처리
+      console.log(data);
       const res = await axios.post(
-        'https://4e4e-210-97-104-152.ngrok-free.app/member/login',
+        'https://b151-119-69-252-33.ngrok-free.app/login',
         data,
       );
       const { access_token } = res.data;
@@ -54,12 +55,12 @@ const LoginForm = () => {
     <LoginFormComponent>
       <form onSubmit={handleSubmit(onValid)}>
         <input
-          {...register('email', {
+          {...register('username', {
             required: '아이디를 입력해주세요',
           })}
           placeholder="이메일"
         ></input>
-        <span> {errors?.email?.message}</span>
+        <span> {errors?.username?.message}</span>
         <input
           {...register('password', {
             required: '비밀번호를 입력해주세요',
