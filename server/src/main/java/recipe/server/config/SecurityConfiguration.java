@@ -2,6 +2,7 @@ package recipe.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -62,15 +63,6 @@ public class SecurityConfiguration {
                         /**
                          * / * 회원 권한 설정.
                          */
-
-
-                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
-                        .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
-                        .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
-
                         .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
                         .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
                         .antMatchers(HttpMethod.PATCH, "/recipes/**").hasRole("USER")
@@ -79,9 +71,6 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
 
                         .anyRequest().permitAll()
-
-
-
                 );
         return http.build();
     }
