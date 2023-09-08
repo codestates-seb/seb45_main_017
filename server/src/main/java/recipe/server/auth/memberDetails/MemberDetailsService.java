@@ -6,7 +6,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import recipe.server.auth.dto.LoginDto;
 import recipe.server.auth.utils.CustomAuthorityUtils;
+import recipe.server.exception.BusinessLogicException;
+import recipe.server.exception.ExceptionCode;
 import recipe.server.member.entity.Member;
 import recipe.server.member.repository.MemberRepository;
 
@@ -28,13 +31,14 @@ public class MemberDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
-//        Member findMember = optionalMember.orElse(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+//        Member findMember = optionalMember.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        if (optionalMember.isEmpty()) {
-            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
-        }
+//        if (optionalMember.isEmpty()) {
+//            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
+//        }
 
-        Member findMember = optionalMember.get();
+//        Member findMember = optionalMember.get();
 
         return new MemberDetails(findMember);
     }
@@ -45,7 +49,7 @@ public class MemberDetailsService implements UserDetailsService {
             setMemberId(member.getMemberId());
             setEmail(member.getEmail());
             setPassword(member.getPassword());
-//            setRoles(member.getRoles());
+            setRoles(member.getRoles());
         }
 
         @Override

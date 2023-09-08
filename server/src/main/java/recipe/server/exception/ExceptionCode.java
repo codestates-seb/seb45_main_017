@@ -9,7 +9,7 @@ public enum ExceptionCode {
 
     RECIPE_NOT_FOUND(404, "Recipe not found"),
 
-    UNAUTHORIZED_MEMBER(404, "Unquthorized member");
+    UNAUTHORIZED_MEMBER(404, "Unauthorized member");
 
     @Getter
     private int status;

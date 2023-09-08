@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import recipe.server.auth.dto.LoginDto;
 import recipe.server.auth.jwt.JwtTokenizer;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -26,12 +28,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public final JwtTokenizer jwtTokenizer;
 
-//    private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, MemberRepository memberRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
-//        this.memberRepository = memberRepository;
+        this.memberRepository = memberRepository;
+
     }
 
     @SneakyThrows
@@ -41,10 +44,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ObjectMapper objectMapper = new ObjectMapper();
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
+//        Member member = memberRepository.findByEmail(loginDto.getUsername()).orElseThrow();
+        Optional<Member> optionalMember = memberRepository.findByEmail(loginDto.getUsername());
+
+        if (optionalMember.isEmpty()) {
+            // 사용자가 존재하지 않음을 알리는 예외 처리
+            throw new UsernameNotFoundException("User not found with username: " + loginDto.getUsername());
+        }
+
+        Member member = optionalMember.get();
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-//
-//        Member member = memberRepository.findByEmail(loginDto.getUsername()).orElseThrow();
 
 
 
