@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throw new UsernameNotFoundException("User not found with username: " + loginDto.getUsername());
         }
 
-        Member member = optionalMember.get();
+//        Member member = optionalMember.get();
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());

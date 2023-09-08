@@ -52,6 +52,9 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())  // Cors 설정 추가
+                // Cors 에러시 모든 허용이라 나중에 코드 뺴고 설정추가로 수정해야 될 수도 있어요.
+                .cors(configuration -> configuration
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 세션 생성 (X)
                 .and()
                 .formLogin().disable()
@@ -71,6 +74,8 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
 
                         .anyRequest().permitAll()
+
+
                 );
         return http.build();
     }
@@ -100,7 +105,7 @@ public class SecurityConfiguration {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, memberRepository);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
