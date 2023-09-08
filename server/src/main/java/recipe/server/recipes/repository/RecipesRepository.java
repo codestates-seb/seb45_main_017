@@ -5,8 +5,10 @@ import recipe.server.recipes.dto.RecipesDto;
 import recipe.server.recipes.entity.Recipes;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RecipesRepository extends JpaRepository<Recipes, Long> {
 
-    //List<RecipesDto.recipesGetDto> getAllRecipes();
+  //  Optional<List<Recipes>> findByRecipesTitleContaining(String recipeTitle);
+  //  Optional<List<Recipes>> findAllByOrderByCreatedAtDesc();
 }

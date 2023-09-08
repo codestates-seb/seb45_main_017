@@ -62,8 +62,9 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+
                         /**
-                         * 회원 권한 설정.
+                         * / * 회원 권한 설정.
                          */
                         .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
                         .antMatchers(HttpMethod.POST, "/recipes").hasRole("USER")
@@ -71,6 +72,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.DELETE, "/recipes/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.POST, "/recipes/**/comment").hasRole("USER")
                         .antMatchers(HttpMethod.PATCH, "/recipes/**/comment/**").hasRole("USER")
+
                         .anyRequest().permitAll()
 
 
