@@ -4,8 +4,8 @@ import LoginForm from '../components/Login/LoginForm';
 import SocialBox from '../components/Login/SocialBox';
 import { useEffect } from 'react';
 
-import { getKakaoToken } from '../functions/KakaoLogin';
-import { getNaverToken } from '../functions/NaverLogin';
+import { GetKakaoToken } from '../functions/KakaoLogin';
+import { GetNaverToken } from '../functions/NaverLogin';
 
 const Body = styled.div`
   display: flex;
@@ -32,10 +32,10 @@ const LoginPage = () => {
     const kakaoLoggedIn = localStorage.getItem('kakaoLoggedIn');
     const naverLoggedIn = localStorage.getItem('naverLoggedIn');
     if (code && kakaoLoggedIn) {
-      getKakaoToken(code);
+      GetKakaoToken(code);
     }
     if (code && naverLoggedIn) {
-      getNaverToken(code);
+      GetNaverToken(code);
     }
   }, []);
 

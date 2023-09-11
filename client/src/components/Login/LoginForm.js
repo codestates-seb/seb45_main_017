@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { kakaoCallback } from '../../functions/KakaoLogin';
+import SaveCookies from '../../functions/SaveCookie';
 
 const LoginFormComponent = styled.div`
   form {
@@ -35,15 +36,12 @@ const LoginForm = () => {
   // 로그인 폼 제출 시 작동 함수
   const onValid = async (data) => {
     try {
-      // 백엔드 측 access_token 완료될 때까지 주석 처리
-      console.log(data);
       const res = await axios.post(
         'https://b151-119-69-252-33.ngrok-free.app/login',
         data,
       );
-      const { access_token } = res.data;
-      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-      localStorage.setItem('access_token', access_token);
+      const { access_token, refresh_token, expires } = res.data;
+      SaveCookies(access_token, refresh_token, expires);
       navigate('/');
     } catch (error) {
       alert('입력한 아이디 혹은 비밀번호가 올바른지 확인해주십시요');
