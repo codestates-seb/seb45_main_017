@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
-
 const CategoryContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -38,7 +37,6 @@ function Category({ onSwitch, menu, setCurrentPage }) {
     onSwitch(index);
     setCurrentPage(1);
   };
-
   return (
     <CategoryContainer>
       <CategoryUl>
@@ -57,9 +55,14 @@ function Category({ onSwitch, menu, setCurrentPage }) {
 }
 
 Category.propTypes = {
-  onSwitch: PropTypes.string.isRequired,
-  menu: PropTypes.string.isRequired,
-  setCurrentPage: PropTypes.string.isRequired,
+  onSwitch: PropTypes.func.isRequired,
+  menu: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default Category;
