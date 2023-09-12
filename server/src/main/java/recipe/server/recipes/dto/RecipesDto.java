@@ -57,9 +57,9 @@ public class RecipesDto {
         @NotNull
         private String recipeBody;
 
-        private String fileName;
+      //  private String fileName;
 
-        private String filePath;
+      //  private String filePath;
     }
 
     @Getter
@@ -84,9 +84,9 @@ public class RecipesDto {
         @NotBlank
         private String recipeBody;
 
-        private String fileName;
+       // private String fileName;
 
-        private String filePath;
+       // private String filePath;
     }
 
     @Getter

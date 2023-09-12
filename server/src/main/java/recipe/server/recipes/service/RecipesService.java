@@ -53,9 +53,12 @@ public class RecipesService {
         return findVerifiedRecipesById(recipesId);
     }
 
-    public Recipes createRecipes(Recipes recipes, long id, MultipartFile file) throws Exception {
+    public Recipes createRecipes(Recipes recipes, Long memberId) throws Exception {//, MultipartFile file) throws Exception {
 
-        recipes.setMember(memberService.findMember(id));
+        recipes.setMember(memberService.findMember(memberId));
+        verifyRecipes(recipes);
+        return saveRecipes(recipes);
+        /*
         String projectPath = System.getProperty("user.dir")
                 + "\\\\src\\\\main\\\\java\\\\recipe\\\\recipes\\\\entity\\\\Recipes";
 
@@ -70,24 +73,23 @@ public class RecipesService {
         recipes.setFileName(imageName);
         recipes.setFilePath("/recipes/" + imageName);
 
-        recipesRepository.save(recipes);
 
-        return saveRecipes(recipes);
+         */
     }
 
-   public void deleteRecipes ( long id,long recipesId) {
+   public void deleteRecipes (long recipesId, Long memberId) {
 
         Recipes recipes = findVerifiedRecipesById(recipesId);
-        verifyUserAuthorization(recipes.getMember().getMemberId(), id);
+        verifyUserAuthorization(recipes.getMember().getMemberId(), memberId);
 
         recipesRepository.delete(recipes);
    }
 
-   public Recipes updateRecipes(Recipes recipes, long id) {
+   public Recipes updateRecipes(Recipes recipes, Long memberId) {
 
         Recipes foundRecipes = findRecipes(recipes.getRecipesId());
 
-        verifyUserAuthorization(id, foundRecipes.getMember().getMemberId());
+        verifyUserAuthorization(memberId, foundRecipes.getMember().getMemberId());
 
         Optional.ofNullable(recipes.getRecipeTitle())
                 .ifPresent(foundRecipes::setRecipeTitle);
@@ -122,4 +124,10 @@ public class RecipesService {
         if (authorizeMemberId != tryingMemberId)
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
     }
+
+    public void verifyRecipes(Recipes recipes) {
+
+        memberService.findMember(recipes.getMember().getMemberId());
+    }
+
 }

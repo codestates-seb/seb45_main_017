@@ -34,10 +34,10 @@ public class Recipes {
     private String recipeBody;
 
     // 사진 이름
-    private String fileName;
+    //private String fileName;
 
     // 이미지 저장 경로
-    private String filePath;
+   // private String filePath;
 
     @Column(nullable = false)
     private LocalDateTime createAt = LocalDateTime.now();
@@ -113,6 +113,7 @@ public class Recipes {
         this.member = member;
     }
 
+    /*
     public String getFileName() {
 
         return fileName;
@@ -132,6 +133,8 @@ public class Recipes {
 
         this.filePath = filePath;
     }
+
+     */
 
     public String getCreateAt() {
         return createAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

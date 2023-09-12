@@ -27,6 +27,7 @@ import static retrofit2.Response.success;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/recipes")
 public class RecipesController {
 
     private final RecipesService recipesService;
@@ -38,10 +39,10 @@ public class RecipesController {
     // TODO : 모든 레시피 보여주기 -> 오픈 api 레시피 + post 레시피
 
     // 레시피 작성 (로그인 시)
-    @PostMapping("/recipes")
-    public ResponseEntity postRecipes(@Valid @RequestBody RecipesDto.recipesPostDto recipesPostDto,
-                                      @RequestParam("file") MultipartFile file) {
-
+    @PostMapping
+    public ResponseEntity postRecipes(@Valid @RequestBody RecipesDto.recipesPostDto recipesPostDto){
+                                     // @RequestParam("file") MultipartFile file) {
+/*
         try {
             Recipes recipes = recipesService.createRecipes(
                     recipesMapper.recipesPostToRecipes(recipesPostDto),
@@ -52,6 +53,23 @@ public class RecipesController {
             RecipesDto.recipesResponseDto response = recipesMapper.recipesToRecipesResponse(recipes);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+ */
+
+        try {
+            // 예외가 발생할 수 있는 코드
+            Recipes recipes = recipesService.createRecipes(
+                    recipesMapper.recipesPostToRecipes(recipesPostDto),
+                    recipesPostDto.getMemberId()
+            );
+
+            RecipesDto.recipesResponseDto response = recipesMapper.recipesToRecipesResponse(recipes);
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // 예외 처리 로직
+            e.printStackTrace(); // 또는 다른 로깅 방식을 사용
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -79,7 +97,7 @@ public class RecipesController {
      */
 
     // 한 개의 레시피만 조회
-    @GetMapping("recipes/{recipe-id}")
+    @GetMapping("/{recipe-id}")
     public ResponseEntity getRecipes(@PathVariable("recipe-id") @Positive long recipesId) {
 
         Recipes recipes = recipesService.findRecipe(recipesId);
@@ -89,8 +107,9 @@ public class RecipesController {
 
     //TODO : pageable
 
+
     // 모든 레시피 조회
-    @GetMapping("/recipes")
+    @GetMapping
     public ResponseEntity findAllRecipes(@RequestParam @Positive int pageNumber,
                                          @RequestParam @Positive int pageSize) {
 
@@ -101,8 +120,8 @@ public class RecipesController {
 
 
     // 레시피 수정 (로그인 시 -> 자신이 작성한 레시피만)
-    @PatchMapping("recipes/{recipe-id}")
-    public ResponseEntity patchRecipes(@PathVariable("recipe-id") @Positive long recipesId,
+    @PatchMapping("/{recipe-id}")
+    public ResponseEntity patchRecipes(@PathVariable("recipe-id") @Positive Long recipesId,
                                        @Valid @RequestBody RecipesDto.recipesPatchDto recipesPatchDto) {
 
         recipesPatchDto.setRecipesId(recipesId);
@@ -114,22 +133,22 @@ public class RecipesController {
 
 
     // 레시피 삭제 (로그인 시 -> 자신이 작성한 레시피만)
-    @DeleteMapping("recipes/{recipe-id}")
+    @DeleteMapping(value = "/{recipe-id}")
     public ResponseEntity deleteRecipes(@PathVariable("recipe-id") @Positive long recipesId,
-                                        @Positive @RequestParam long id) {
+                                        @Positive @RequestParam Long memberId) {
 
         {
-            recipesService.deleteRecipes(recipesId, id);
+            recipesService.deleteRecipes(recipesId, memberId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        // TODO : 레시피 검색 -> 필터
-        // TODO : 레시피 추천
     }
 
+    // TODO : 레시피 검색 -> 필터
+    // TODO : 레시피 추천
+
     // 더미 데이터 가져오기
-    @GetMapping("/recipes/data")
+    @GetMapping("/data")
     public ResponseEntity getAllRecipes() {
 
         List<Recipe> recipes = recipeRepository.findAll();

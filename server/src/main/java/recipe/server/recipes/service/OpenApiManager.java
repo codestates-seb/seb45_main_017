@@ -12,6 +12,8 @@ import java.util.Map;
 public class OpenApiManager {
 
     //https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/100
+
+    //spring.mvc.static-path-pattern=/webapp/**
     private final String BASE_URL = "https://openapi.foodsafetykorea.go.kr";
     private final String apiUrl = "/COOKRCP01";
     private final String serviceKey = "e907859720c24072b3be";
@@ -34,6 +36,8 @@ public class OpenApiManager {
         return resultMap;
     }
 
+    /*
+
     public ResponseEntity<?> convertRetrofitResponse(Response<?> retrofitResponse) {
         if (retrofitResponse.isSuccessful()) {
             return ResponseEntity.ok(retrofitResponse.body());
@@ -41,4 +45,6 @@ public class OpenApiManager {
             return ResponseEntity.status(HttpStatus.valueOf(retrofitResponse.code())).body(retrofitResponse.errorBody());
         }
     }
+
+     */
 }
