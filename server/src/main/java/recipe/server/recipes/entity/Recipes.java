@@ -30,9 +30,14 @@ public class Recipes {
     private String nutrition;
 
     // 레시피 내용
-    // TODO : 이미지 삽입
     @Column(nullable = false)
     private String recipeBody;
+
+    // 사진 이름
+    private String fileName;
+
+    // 이미지 저장 경로
+    private String filePath;
 
     @Column(nullable = false)
     private LocalDateTime createAt = LocalDateTime.now();
@@ -106,6 +111,26 @@ public class Recipes {
     public void setMember(Member member) {
 
         this.member = member;
+    }
+
+    public String getFileName() {
+
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+
+        this.fileName = fileName;
+    }
+
+    public String getFilePath() {
+
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+
+        this.filePath = filePath;
     }
 
     public String getCreateAt() {

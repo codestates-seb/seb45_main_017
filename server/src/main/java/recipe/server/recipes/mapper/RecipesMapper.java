@@ -24,6 +24,8 @@ public class RecipesMapper {
         recipes.setRecipeType(recipesPostDto.getRecipeType());
         recipes.setNutrition(recipesPostDto.getNutrition());
         recipes.setRecipeBody(recipesPostDto.getRecipeBody());
+        recipes.setFilePath(recipesPostDto.getFilePath());
+        recipes.setFileName(recipesPostDto.getFileName());
 
         return recipes;
     }
@@ -37,6 +39,8 @@ public class RecipesMapper {
         recipes.setNutrition(recipesPatchDto.getNutrition());
         recipes.setRecipeBody(recipesPatchDto.getRecipeBody());
         recipes.setRecipesId(recipesPatchDto.getRecipesId());
+        recipes.setFilePath(recipesPatchDto.getFilePath());
+        recipes.setFileName(recipesPatchDto.getFileName());
 
         return recipes;
     }

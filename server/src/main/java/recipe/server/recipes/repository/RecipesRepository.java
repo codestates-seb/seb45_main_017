@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface RecipesRepository extends JpaRepository<Recipes, Long> {
 
-  //  Optional<List<Recipes>> findByRecipesTitleContaining(String recipeTitle);
-  //  Optional<List<Recipes>> findAllByOrderByCreatedAtDesc();
+    Optional<List<Recipes>> findByRecipesTitleContaining(String recipeTitle);
+    Optional<List<Recipes>> findAllByOrderByCreatedAtDesc();
 }
