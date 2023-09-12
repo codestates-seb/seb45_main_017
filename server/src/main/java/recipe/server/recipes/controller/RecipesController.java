@@ -73,7 +73,7 @@ public class RecipesController {
 
         recipesPatchDto.setRecipesId(recipesId);
         Recipes recipes = recipesService.updateRecipes(recipesMapper.recipesPatchToRecipes(recipesPatchDto),
-                recipesPatchDto.getId());
+                recipesPatchDto.getMemberId());
 
         return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.OK);
     }
