@@ -17,8 +17,8 @@ public class RecipesDto {
     @Setter
     public class recipesResponseDto {
 
-        private long recipesId;
-        private long id;
+        private Long recipesId;
+        private Long memberId;
         private String recipeTitle;
         private String recipeType;
         private String nutrition;
@@ -43,7 +43,7 @@ public class RecipesDto {
     public static class recipesPostDto {
 
         @NotNull
-        private long id;
+        private Long memberId;
 
         @NotBlank
         private String recipeTitle;
@@ -67,10 +67,10 @@ public class RecipesDto {
     public static  class recipesPatchDto {
 
         @NotNull
-        private long id;
+        private Long memberId;
 
         @NotNull
-        private long recipesId;
+        private Long recipesId;
 
         @NotBlank
         private String recipeTitle;
