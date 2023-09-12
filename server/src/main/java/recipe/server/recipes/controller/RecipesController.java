@@ -45,7 +45,7 @@ public class RecipesController {
         try {
             Recipes recipes = recipesService.createRecipes(
                     recipesMapper.recipesPostToRecipes(recipesPostDto),
-                    recipesPostDto.getId(),
+                    recipesPostDto.getMemberId(),
                     file
             );
 
@@ -65,6 +65,7 @@ public class RecipesController {
         return success(openApiManager.fetch().getBody());
         }
      */
+
     /*
     // 레시피 조회 -> 오픈 api 가져오기 (여러 레시피 보여주기)
     @GetMapping("/api/{api-key}/COOKRCP01/{start-num}/{end-num}")

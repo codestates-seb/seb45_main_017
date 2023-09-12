@@ -55,7 +55,7 @@ public class RecipesMapper {
         RecipesDto.recipesResponseDto recipesResponseDto = recipesDto.new recipesResponseDto();
 
         recipesResponseDto.setRecipesId(recipes.getRecipesId());
-        recipesResponseDto.setId(recipes.getMember().getMemberId());
+        recipesResponseDto.setMemberId(recipes.getMember().getMemberId());
         recipesResponseDto.setRecipeTitle(recipes.getRecipeTitle());
         recipesResponseDto.setRecipeType(recipes.getRecipeType());
         recipesResponseDto.setNutrition(recipes.getNutrition());
