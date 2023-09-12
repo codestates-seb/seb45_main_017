@@ -13,7 +13,6 @@ public class MemberMapperImpl implements MemberMapper {
         member.setEmail(requestBody.getEmail());
         member.setUsername(requestBody.getUsername());
         member.setPassword(requestBody.getPassword());
-        // 기타 필요한 변환 작업 수행
         return member;
     }
 
@@ -23,7 +22,6 @@ public class MemberMapperImpl implements MemberMapper {
         member.setEmail(requestBody.getEmail());
         member.setUsername(requestBody.getUsername());
         member.setPassword(requestBody.getPassword());
-        // 기타 필요한 변환 작업 수행
         return member;
     }
 
@@ -33,7 +31,6 @@ public class MemberMapperImpl implements MemberMapper {
         responseDto.setMemberId(member.getMemberId());
         responseDto.setEmail(member.getEmail());
         responseDto.setUsername(member.getUsername());
-        // 기타 필요한 변환 작업 수행
         return responseDto;
     }
 }
