@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 const CategoryContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -32,20 +34,23 @@ const CaButton = styled.button`
 `;
 
 // 카테고리
-function Category({ onSwitch, menu, setCurrentPage }) {
+function Category({ menu, obj, setSearchData }) {
   const HandleClickIndex = (index) => {
-    onSwitch(index);
-    setCurrentPage(1);
+    obj.name = menu[index].name;
+    setSearchData('');
   };
+
   return (
     <CategoryContainer>
       <CategoryUl>
         {menu.map((el, index) => {
           return (
-            <CategoryLi key={index}>
-              <CaButton onClick={() => HandleClickIndex(index)}>
-                {el.name}
-              </CaButton>
+            <CategoryLi key={index} value={menu[index].name}>
+              <Link to={`/recipes/${menu[index].name}/${1}`}>
+                <CaButton onClick={() => HandleClickIndex(index)}>
+                  {el.name}
+                </CaButton>
+              </Link>
             </CategoryLi>
           );
         })}
@@ -55,14 +60,14 @@ function Category({ onSwitch, menu, setCurrentPage }) {
 }
 
 Category.propTypes = {
-  onSwitch: PropTypes.func.isRequired,
   menu: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
+  obj: PropTypes.object.isRequired,
+  setSearchData: PropTypes.func.isRequired,
 };
 
 export default Category;

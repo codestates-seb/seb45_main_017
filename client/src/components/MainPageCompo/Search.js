@@ -15,6 +15,7 @@ const SearchInput = styled.input`
   padding-left: 10px;
 `;
 
+// 검색창
 function Search({ searchData, HandleOnSearch }) {
   return (
     <SearchDiv>

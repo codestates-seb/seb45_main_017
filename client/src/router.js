@@ -3,8 +3,20 @@ import MainPage from './pages/MainPage';
 
 const router = createBrowserRouter([
   {
-    path: '/recipes/:content/:page',
+    path: '/recipes',
     element: <MainPage />,
+    children: [
+      {
+        path: ':name',
+        element: <MainPage />,
+        children: [
+          {
+            path: ':page',
+            element: <MainPage />,
+          },
+        ],
+      },
+    ],
   },
 ]);
 
