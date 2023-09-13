@@ -206,12 +206,12 @@ const CreateRecipe = () => {
     recipeData.append('recipeType', selectedCategory);
     recipeData.append('nutrition', nutrients);
     recipeData.append('recipeBody', cookingMethod);
-    recipeData.append('image', selectedImage);
+    recipeData.append('file', selectedImage);
 
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = 'https://2422-119-69-252-33.ngrok-free.app';
 
     try {
-      const response = await axios.post(apiUrl + '/recipes', recipeData, {
+      const response = await axios.post(`${apiUrl}/recipes`, recipeData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
