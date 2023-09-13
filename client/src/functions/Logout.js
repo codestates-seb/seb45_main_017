@@ -1,7 +1,7 @@
 import cookies from 'react-cookies';
 import { useNavigate } from 'react-router-dom';
 
-const Logout = () => {
+const logout = () => {
   const navigate = useNavigate();
   cookies.remove('access_token');
   cookies.remove('refresh_token');
@@ -12,4 +12,4 @@ const Logout = () => {
   navigate('/login');
 };
 
-export default Logout;
+export default logout;

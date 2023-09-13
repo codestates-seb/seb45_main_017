@@ -1,6 +1,6 @@
 import axios from 'axios';
-import SaveCookies from './SaveCookie';
-import { useNavigate } from 'react-router-dom';
+import saveCookies from './SaveCookie';
+import { redirect } from 'react-router-dom';
 
 const clientId = process.env.REACT_APP_NAVER_CLIENT_ID;
 const redirectId = process.env.REACT_APP_NAVER_REDIRECTURL;
@@ -19,12 +19,9 @@ export const naverCallback = () => {
   localStorage.setItem('naverLoggedIn', 'true');
 };
 
-export const GetNaverToken = async (code) => {
-  const navigate = useNavigate();
-
+export const getNaverToken = async (code) => {
   const res = await axios.post('Backend_Naver_API', code);
   const { access_token, refresh_token, expires } = res.data;
-  SaveCookies(access_token, refresh_token, expires);
-
-  navigate('/');
+  saveCookies(access_token, refresh_token, expires);
+  redirect('/');
 };

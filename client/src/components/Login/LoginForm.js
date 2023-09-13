@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { kakaoCallback } from '../../functions/KakaoLogin';
 import SaveCookies from '../../functions/SaveCookie';
 
 const LoginFormComponent = styled.div`
@@ -42,6 +41,7 @@ const LoginForm = () => {
       );
       const { access_token, refresh_token, expires } = res.data;
       SaveCookies(access_token, refresh_token, expires);
+
       navigate('/');
     } catch (error) {
       alert('입력한 아이디 혹은 비밀번호가 올바른지 확인해주십시요');

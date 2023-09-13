@@ -4,8 +4,10 @@ import LoginForm from '../components/Login/LoginForm';
 import SocialBox from '../components/Login/SocialBox';
 import { useEffect } from 'react';
 
-import { GetKakaoToken } from '../functions/KakaoLogin';
-import { GetNaverToken } from '../functions/NaverLogin';
+import { getKakaoToken } from '../functions/KakaoLogin';
+import { getNaverToken } from '../functions/NaverLogin';
+
+import Header from '../components/common/Header';
 
 const Body = styled.div`
   display: flex;
@@ -32,15 +34,16 @@ const LoginPage = () => {
     const kakaoLoggedIn = localStorage.getItem('kakaoLoggedIn');
     const naverLoggedIn = localStorage.getItem('naverLoggedIn');
     if (code && kakaoLoggedIn) {
-      GetKakaoToken(code);
+      getKakaoToken(code);
     }
     if (code && naverLoggedIn) {
-      GetNaverToken(code);
+      getNaverToken(code);
     }
   }, []);
 
   return (
     <Body>
+      <Header></Header>
       <Container>
         <TextBox></TextBox>
         <LoginForm></LoginForm>

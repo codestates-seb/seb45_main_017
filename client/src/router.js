@@ -19,13 +19,11 @@ const router = createBrowserRouter([
     path: '/recipe-create',
     element: <CreateRecipe />,
   },
-  { 
+  {
     path: '/login',
     element: <LoginPage />,
   },
-  { path: '/sign',
-   element: <SignPage /> ,
-  },
+  { path: '/sign', element: <SignPage /> },
 ]);
 
 export default router;
