@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 import Pagination from 'react-js-pagination';
+import { useNavigate } from 'react-router-dom';
 
 const PaginationBox = styled.div`
   .pagination {
@@ -42,15 +43,17 @@ const PaginationBox = styled.div`
 `;
 
 // 페이지네이션을 사용한 페이지 버튼
-function Paging({ filterData, currentPage, setCurrentPage }) {
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+function Paging({ filterData, obj }) {
+  const navigator = useNavigate();
 
+  const handlePageChange = (page) => {
+    obj.page = page;
+    navigator(`/recipes/${obj.name}/${page}`);
+  };
   return (
     <PaginationBox>
       <Pagination
-        activePage={currentPage}
+        activePage={obj.page}
         itemsCountPerPage={12}
         totalItemsCount={filterData.length}
         pageRangeDisplayed={5}
@@ -62,8 +65,7 @@ function Paging({ filterData, currentPage, setCurrentPage }) {
   );
 }
 Paging.propTypes = {
-  filterData: PropTypes.string.isRequired,
-  currentPage: PropTypes.string.isRequired,
-  setCurrentPage: PropTypes.string.isRequired,
+  filterData: PropTypes.array.isRequired,
+  obj: PropTypes.object.isRequired,
 };
 export default Paging;
