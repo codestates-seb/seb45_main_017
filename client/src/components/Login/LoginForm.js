@@ -10,17 +10,32 @@ const LoginFormComponent = styled.div`
     flex-direction: column;
     input {
       padding: 10px 10px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       outline: none;
-      width: 250px;
+      width: 370px;
+      border: 1px solid black;
       border-radius: 5px;
+      background-color: rgb(245, 245, 245);
     }
     button {
+      margin-top: 15px;
       padding: 10px 10px;
       border-radius: 5px;
       border: none;
+      background-color: rgb(73, 125, 255);
+      color: white;
       cursor: pointer;
     }
+  }
+`;
+
+const SignUpComponent = styled.div`
+  margin-top: 15px;
+  font-size: 12px;
+  text-align: right;
+  span:nth-child(2) {
+    color: #497dff;
+    cursor: pointer;
   }
 `;
 
@@ -69,6 +84,17 @@ const LoginForm = () => {
         <span> {errors?.password?.message}</span>
         <button>로그인</button>
       </form>
+      <SignUpComponent>
+        <span>아직 회원이 아니신가요? </span>
+        <span
+          role="presentation"
+          onClick={() => {
+            navigate('/signup');
+          }}
+        >
+          회원가입 하기
+        </span>
+      </SignUpComponent>
     </LoginFormComponent>
   );
 };

@@ -100,7 +100,7 @@ const Header = () => {
                 >
                   로그인
                 </span>
-                <span role="presentation" onClick={() => [navigate('/sign')]}>
+                <span role="presentation" onClick={() => [navigate('/signup')]}>
                   회원가입
                 </span>
               </BubbleText>

@@ -8,7 +8,7 @@ import SignPage from './pages/SignPage';
 
 const router = createBrowserRouter([
   {
-     path: '/recipes',
+    path: '/recipes',
     element: <MainPage />,
     children: [
       {
@@ -36,12 +36,7 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
 
-
-  { path: '/sign',
-   element: <SignPage /> ,
-
-  },
-
+  { path: '/signup', element: <SignPage /> },
 ]);
 
 export default router;

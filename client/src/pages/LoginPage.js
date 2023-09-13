@@ -21,7 +21,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  background-color: aqua;
+
   width: 500px;
   height: 500px;
 `;
