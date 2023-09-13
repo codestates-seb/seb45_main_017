@@ -1,7 +1,20 @@
 import { styled } from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+
+const Editbtn = styled.div`
+  margin-left: 45%;
+  width: 4.5%;
+  border: none;
+  background-color: #569aff;
+  color: white;
+  border-radius: 7px;
+  padding: 15px;
+  &:hover {
+    background-color: rgba(0, 109, 205, 1);
+  }
+`;
 
 const Loadingtext = styled.div`
   .loading-container {
@@ -151,14 +164,21 @@ const RecipeDes = () => {
   const [editingComment, setEditingComment] = useState(null);
 
   const { id } = useParams();
+
   console.log(id);
+
+  const navigate = useNavigate();
+
+  const handleEditButtonClick = () => {
+    navigate('/recipe-edit');
+  };
   //댓글 삭제
 
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = 'https://8757-45-64-145-147.ngrok-free.app';
 
   const handleDeleteComment = (comment) => {
     axios
-      .delete(`${apiUrl}/recipes/id/comment/${comment.id}`)
+      .delete(`${apiUrl}/recipes/1/comment/1`)
       .then(() => {
         const updatedComments = comments.filter((c) => c.id !== comment.id);
         setComments(updatedComments);
@@ -175,7 +195,7 @@ const RecipeDes = () => {
   const handleSaveComment = (editedComment) => {
     // 댓글 수정
     axios
-      .patch(`${apiUrl}/recipes/id/comment/${editedComment.id}`, {
+      .patch(`${apiUrl}/recipes/1/comment/1`, {
         content: editedComment.content,
       })
       .then(() => {
@@ -199,7 +219,7 @@ const RecipeDes = () => {
     //댓글 작성
     if (newComment.trim() !== '') {
       axios
-        .post(`${apiUrl}/id/comment`, {
+        .post(`${apiUrl}/recipes/1/comment`, {
           content: newComment,
         })
         .then((response) => {
@@ -212,7 +232,8 @@ const RecipeDes = () => {
     }
   };
   useEffect(() => {
-    const OpenApiUrl = process.env.REACT_APP_OPENAPI_URL;
+    const OpenApiUrl =
+      'https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/1';
 
     axios
       .get(OpenApiUrl)
@@ -248,7 +269,7 @@ const RecipeDes = () => {
         });
     } else {
       axios
-        .delete(`${apiUrl}/recipes/${id}`)
+        .delete(`${apiUrl}/recipes/1`)
         .then(() => {
           setIsLiked(false);
         })
@@ -312,6 +333,7 @@ const RecipeDes = () => {
           </div>
         </div>
       </RecipeInfo>
+      <Editbtn onClick={handleEditButtonClick}>레시피 수정</Editbtn>
       <CommentList>
         <div className="comment-title">댓글</div>
         <div className="create-comment">
