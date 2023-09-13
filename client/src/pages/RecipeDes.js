@@ -164,6 +164,7 @@ const RecipeDes = () => {
   const [editingComment, setEditingComment] = useState(null);
 
   const { id } = useParams();
+
   console.log(id);
 
   const navigate = useNavigate();
