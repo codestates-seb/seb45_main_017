@@ -10,7 +10,7 @@ const LoginFormComponent = styled.div`
     flex-direction: column;
     input {
       padding: 10px 10px;
-      margin-bottom: 20px;
+
       outline: none;
       width: 370px;
       border: 1px solid black;
@@ -25,6 +25,11 @@ const LoginFormComponent = styled.div`
       background-color: rgb(73, 125, 255);
       color: white;
       cursor: pointer;
+    }
+    span {
+      font-size: 13px;
+      margin: 10px;
+      opacity: 0.6;
     }
   }
 `;
@@ -69,7 +74,7 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit(onValid)}>
         <input
           {...register('username', {
-            required: '아이디를 입력해주세요',
+            required: '이메일을 입력해주세요',
           })}
           placeholder="이메일"
         ></input>

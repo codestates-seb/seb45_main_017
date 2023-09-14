@@ -1,6 +1,10 @@
 import { styled } from 'styled-components';
 import cookies from 'react-cookies';
 import { useNavigate } from 'react-router-dom';
+import { changeSideState } from '../../store';
+import { useDispatch } from 'react-redux';
+import logout from '../../functions/Logout';
+import Sidebar from './Sidebar';
 
 const HeaderComponent = styled.div`
   position: fixed;
@@ -11,9 +15,7 @@ const HeaderComponent = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 900px;
   height: 100%;
-  margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(1, 55px);
@@ -21,6 +23,23 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  svg {
+    font-size: 20px;
+    fill: #ffff;
+  }
+
+  .sidebar {
+    justify-content: flex-start;
+    margin-left: 40px;
+  }
+
+  .title span {
+    cursor: pointer;
+    font-size: 18px;
+    color: #ffff;
+    font-weight: 600;
   }
 
   .bubble {
@@ -48,7 +67,9 @@ const Container = styled.div`
 const BubbleText = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   span {
+    width: 70px;
     margin-top: 5px;
     font-size: 13px;
     color: #ffff;
@@ -60,15 +81,38 @@ const BubbleText = styled.div`
 `;
 
 const Header = () => {
+  let dispatch = useDispatch();
+
   const loggedIn = cookies.load('access_token');
   const navigate = useNavigate();
 
   return (
     <HeaderComponent>
       <Container>
-        <div className="sidebar"></div>
+        <div
+          className="sidebar"
+          role="presentation"
+          onClick={() => {
+            dispatch(changeSideState());
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="1em"
+            viewBox="0 0 448 512"
+          >
+            <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
+          </svg>
+        </div>
         <div className="title">
-          <span>Search Chef</span>
+          <span
+            role="presentation"
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            Search Chef
+          </span>
         </div>
         <div className="user">
           <svg
@@ -84,7 +128,7 @@ const Header = () => {
                 <span
                   role="presentation"
                   onClick={() => {
-                    navigate('/');
+                    logout();
                   }}
                 >
                   로그아웃
@@ -108,6 +152,7 @@ const Header = () => {
           </div>
         </div>
       </Container>
+      <Sidebar></Sidebar>
     </HeaderComponent>
   );
 };

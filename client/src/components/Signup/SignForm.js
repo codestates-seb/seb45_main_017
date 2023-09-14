@@ -29,6 +29,7 @@ const FormComponent = styled.form`
     font-size: 13px;
     margin-bottom: 10px;
     margin-left: 10px;
+    opacity: 0.6;
   }
 `;
 
