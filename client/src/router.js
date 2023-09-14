@@ -9,7 +9,7 @@ import EditRecipe from './pages/Editrecipe';
 
 const router = createBrowserRouter([
   {
-     path: '/recipes',
+    path: '/recipes',
     element: <MainPage />,
     children: [
       {
@@ -37,9 +37,7 @@ const router = createBrowserRouter([
     path: '/login',
     element: <LoginPage />,
   },
-  { path: '/sign',
-   element: <SignPage /> ,
-  },
+  { path: '/sign', element: <SignPage /> },
 ]);
 
 export default router;
