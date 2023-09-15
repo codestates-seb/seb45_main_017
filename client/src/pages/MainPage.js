@@ -23,17 +23,28 @@ function MainPage() {
   console.log(filterData);
   console.log(data);
 
-  const start = obj.page === undefined ? 0 : (obj.page - 1) * 12;
+  const start =
+    obj.page === undefined ? 0 : obj.page === 'page' ? 0 : (obj.page - 1) * 12;
   const end = start + 12;
 
   const menu = useMemo(
     () => [
-      { id: 1, name: '전체', content: 'all' },
-      { id: 2, name: '밥', content: 'rice' },
-      { id: 3, name: '반찬', content: 'sidedish' },
-      { id: 4, name: '국&찌개', content: 'soup' },
-      { id: 5, name: '일품', content: 'maindish' },
-      { id: 6, name: '후식', content: 'dessert' },
+      { id: 1, name: '전체', content: 'all', picture: 'picture/food.png' },
+      { id: 2, name: '밥', content: 'rice', picture: 'picture/rice.png' },
+      { id: 3, name: '반찬', content: 'sidedish', picture: 'picture/side.png' },
+      { id: 4, name: '국&찌개', content: 'soup', picture: 'picture/soup.png' },
+      {
+        id: 5,
+        name: '일품',
+        content: 'maindish',
+        picture: 'picture/noodle.png',
+      },
+      {
+        id: 6,
+        name: '후식',
+        content: 'dessert',
+        picture: 'picture/dessert.png',
+      },
     ],
     [],
   );
