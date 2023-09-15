@@ -1,7 +1,9 @@
 package recipe.server.recipes.mapper;
 
+import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+import recipe.server.member.entity.Member;
 import recipe.server.recipes.dto.RecipesDto;
 import recipe.server.recipes.entity.Recipes;
 import recipe.server.utils.PageInfo;
@@ -51,15 +53,32 @@ public class RecipesMapper {
             return null;
         }
 
-        RecipesDto recipesDto = new RecipesDto();
-        RecipesDto.recipesResponseDto recipesResponseDto = recipesDto.new recipesResponseDto();
+//        RecipesDto recipesDto = new RecipesDto();
+//        RecipesDto.recipesResponseDto recipesResponseDto = recipesDto.new recipesResponseDto();
+
+        RecipesDto.recipesResponseDto recipesResponseDto = new RecipesDto.recipesResponseDto();
 
         recipesResponseDto.setRecipesId(recipes.getRecipesId());
-        recipesResponseDto.setMemberId(recipes.getMember().getMemberId());
+
+
+
+//        recipesResponseDto.setMemberId(recipes.getMember().getMemberId());
+
+
+
+        Member member = recipes.getMember();
+        if (member != null) {
+            recipesResponseDto.setMemberId(member.getMemberId());
+        } else {
+            recipesResponseDto.setMemberId(null); // 또는 다른 값으로 처리
+        }
+
         recipesResponseDto.setRecipeTitle(recipes.getRecipeTitle());
         recipesResponseDto.setRecipeType(recipes.getRecipeType());
         recipesResponseDto.setNutrition(recipes.getNutrition());
         recipesResponseDto.setRecipeBody(recipes.getRecipeBody());
+
+
        // recipesResponseDto.setCreateAt(recipes.getCreateAt());
        // recipesResponseDto.setModifiedAt(recipes.getModifiedAt());
 

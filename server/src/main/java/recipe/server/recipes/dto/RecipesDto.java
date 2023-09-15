@@ -3,6 +3,10 @@ package recipe.server.recipes.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.json.simple.JSONObject;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 import recipe.server.utils.PageInfo;
 
 import javax.persistence.Column;
@@ -16,7 +20,7 @@ public class RecipesDto {
 
     @Getter
     @Setter
-    public class recipesResponseDto {
+    public static class recipesResponseDto {
 
         private Long recipesId;
         private Long memberId;
@@ -27,13 +31,29 @@ public class RecipesDto {
         private String createAt;
         private String modifiedAt;
 
+        private Long imageId;
+        //파일
+//        private MultipartFile image;
+
+    }
+
+    @Data
+    public static class recipesApiGetDto {
+
+        private String RCP_NM; //메뉴명
+        private String RCP_WAY2; //조리방법
+        private String RCP_PARTS_DTLS; //재료정보
+        private String RCP_PAT2; //요리종류
+        private String INFO_ENG; //열량
+        private String HASH_TAG; // 해쉬태그
     }
 
     @Getter
+    @Setter
     public static class recipesPostDto {
 
-        @NotNull
-        private Long memberId;
+//        @NotNull
+//        private Long memberId;
 
         @NotBlank
         private String recipeTitle;
@@ -47,9 +67,14 @@ public class RecipesDto {
         @NotNull
         private String recipeBody;
 
-        //  private String fileName;
+        private MultipartFile image;
 
-        //  private String filePath;
+
+//        private MultipartFile image;
+
+      //  private String fileName;
+
+      //  private String filePath;
     }
 
     @Getter
@@ -74,9 +99,11 @@ public class RecipesDto {
         @NotBlank
         private String recipeBody;
 
-        // private String fileName;
+//        private MultipartFile image;
 
-        // private String filePath;
+       // private String fileName;
+
+       // private String filePath;
     }
 
     @Getter

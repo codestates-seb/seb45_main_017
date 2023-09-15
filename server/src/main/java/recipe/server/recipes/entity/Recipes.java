@@ -29,15 +29,18 @@ public class Recipes {
     // 레시피 영양소
     private String nutrition;
 
+    @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
+    private List<Images> images = new ArrayList<>();
+
     // 레시피 내용
     @Column(nullable = false)
     private String recipeBody;
 
-    // 오픈 api 데이터 시작점
-    private long startNum;
+    // 사진 이름
+    //private String fileName;
 
-    // 오픈 api 데이터 마지막점
-    private long endNum;
+    // 이미지 저장 경로
+   // private String filePath;
 
     @Column(nullable = false)
     private LocalDateTime createAt = LocalDateTime.now();
@@ -46,12 +49,14 @@ public class Recipes {
     private LocalDateTime modifiedAt;
 
 
-    @ManyToOne (targetEntity = Member.class,  fetch = FetchType.LAZY)
-    @JoinColumn (name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany (targetEntity = Comment.class, mappedBy = "commentId")
+    @OneToMany(mappedBy = "recipes")
     private List<Comment> comments = new ArrayList<>();
+
+    private String imagePath;
 
     public long getRecipesId() {
 
@@ -111,26 +116,6 @@ public class Recipes {
     public void setMember(Member member) {
 
         this.member = member;
-    }
-
-    public long getStartNum() {
-
-        return startNum;
-    }
-
-    public void setStartNum(long startNum) {
-
-        this.startNum = startNum;
-    }
-
-    public long getEndNum() {
-
-        return endNum;
-    }
-
-    public void setEndNum(long endNum) {
-
-        this.endNum = endNum;
     }
 
     public String getCreateAt() {

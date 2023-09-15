@@ -9,6 +9,8 @@ public enum ExceptionCode {
 
     RECIPE_NOT_FOUND(404, "Recipe not found"),
 
+    MEMBER_NOT_AUTHENTICATED(401, "Member not Authenticated"),
+
     UNAUTHORIZED_MEMBER(404, "Unauthorized member");
 
     @Getter

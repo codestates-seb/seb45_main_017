@@ -2,6 +2,7 @@ package recipe.server.comment.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import recipe.server.member.entity.Member;
 import recipe.server.recipes.entity.Recipes;
 
 import javax.persistence.*;
@@ -25,8 +26,13 @@ public class Comment {
     @Column(nullable = true)
     private LocalDateTime modifiedAt;
 
-    @ManyToOne(targetEntity = Recipes.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipesId")
+    @ManyToOne
+    @JoinColumn(name = "RECIPES_ID")
     private Recipes recipes;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
 
 }
