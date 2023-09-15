@@ -3,6 +3,7 @@ package recipe.server.recipes.dto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 import recipe.server.utils.PageInfo;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ public class RecipesDto {
 
     @Getter
     @Setter
-    public class recipesResponseDto {
+    public static class recipesResponseDto {
 
         private Long recipesId;
         private Long memberId;
@@ -25,6 +26,10 @@ public class RecipesDto {
         private String recipeBody;
         private String createAt;
         private String modifiedAt;
+
+        private Long imageId;
+        //파일
+//        private MultipartFile image;
 
     }
 
@@ -40,10 +45,11 @@ public class RecipesDto {
     }
 
     @Getter
+    @Setter
     public static class recipesPostDto {
 
-        @NotNull
-        private Long memberId;
+//        @NotNull
+//        private Long memberId;
 
         @NotBlank
         private String recipeTitle;
@@ -56,6 +62,11 @@ public class RecipesDto {
 
         @NotNull
         private String recipeBody;
+
+        private MultipartFile image;
+
+
+//        private MultipartFile image;
 
       //  private String fileName;
 
@@ -83,6 +94,8 @@ public class RecipesDto {
 
         @NotBlank
         private String recipeBody;
+
+//        private MultipartFile image;
 
        // private String fileName;
 

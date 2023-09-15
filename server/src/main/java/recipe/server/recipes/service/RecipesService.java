@@ -7,18 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import recipe.server.exception.BusinessLogicException;
 import recipe.server.exception.ExceptionCode;
+import recipe.server.member.entity.Member;
 import recipe.server.member.service.MemberService;
-import recipe.server.recipes.dto.RecipesDto;
 import recipe.server.recipes.entity.Recipes;
+import recipe.server.recipes.repository.ImageRepository;
 import recipe.server.recipes.repository.RecipesRepository;
 
-import java.io.File;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -29,6 +26,8 @@ public class RecipesService {
 
     private final MemberService memberService;
 
+    private final ImageRepository imageRepository;
+
 
     /*
     public List<RecipesDto.recipesResponseDto> getAllRecipes() {
@@ -38,11 +37,9 @@ public class RecipesService {
      */
 
 
-
-
     public Page<Recipes> findAllRecipes(int pageNumber, int pageSize) {
 
-        Pageable pageable = PageRequest.of(pageNumber -1, pageSize, Sort.by("recipesId"));
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("recipesId"));
         Page<Recipes> recipes = recipesRepository.findAll(pageable);
 
         return recipes;
@@ -53,39 +50,22 @@ public class RecipesService {
         return findVerifiedRecipesById(recipesId);
     }
 
-    public Recipes createRecipes(Recipes recipes, Long memberId) throws Exception {//, MultipartFile file) throws Exception {
-
-        recipes.setMember(memberService.findMember(memberId));
-        verifyRecipes(recipes);
-        return saveRecipes(recipes);
-        /*
-        String projectPath = System.getProperty("user.dir")
-                + "\\\\src\\\\main\\\\java\\\\recipe\\\\recipes\\\\entity\\\\Recipes";
-
-        UUID uuid = UUID.randomUUID();
-
-        String imageName = uuid + "_" + file.getOriginalFilename();
-
-        File savaFile = new File(projectPath, imageName);
-
-        file.transferTo(savaFile);
-
-        recipes.setFileName(imageName);
-        recipes.setFilePath("/recipes/" + imageName);
+    public Recipes createRecipes(Recipes recipes) {
 
 
-         */
+        return recipesRepository.save(recipes);
     }
 
-   public void deleteRecipes (long recipesId, Long memberId) {
+
+    public void deleteRecipes(long recipesId, Long memberId) {
 
         Recipes recipes = findVerifiedRecipesById(recipesId);
         verifyUserAuthorization(recipes.getMember().getMemberId(), memberId);
 
         recipesRepository.delete(recipes);
-   }
+    }
 
-   public Recipes updateRecipes(Recipes recipes, Long memberId) {
+    public Recipes updateRecipes(Recipes recipes, Long memberId) {
 
         Recipes foundRecipes = findRecipes(recipes.getRecipesId());
 
@@ -94,14 +74,14 @@ public class RecipesService {
         Optional.ofNullable(recipes.getRecipeTitle())
                 .ifPresent(foundRecipes::setRecipeTitle);
         Optional.ofNullable(recipes.getRecipeType())
-                        .ifPresent(foundRecipes::setRecipeType);
+                .ifPresent(foundRecipes::setRecipeType);
         Optional.ofNullable(recipes.getNutrition())
-                        .ifPresent(foundRecipes::setNutrition);
+                .ifPresent(foundRecipes::setNutrition);
         Optional.ofNullable(recipes.getRecipeBody())
                 .ifPresent(foundRecipes::setRecipeBody);
 
         return saveRecipes(foundRecipes);
-   }
+    }
 
     private Recipes saveRecipes(Recipes recipes) {
         return recipesRepository.save(recipes);
@@ -128,6 +108,9 @@ public class RecipesService {
     public void verifyRecipes(Recipes recipes) {
 
         memberService.findMember(recipes.getMember().getMemberId());
+
+
     }
 
 }
+
