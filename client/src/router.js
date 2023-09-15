@@ -32,12 +32,17 @@ const router = createBrowserRouter([
     path: '/recipe-create',
     element: <CreateRecipe />,
   },
+
   { path: '/recipe-edit', element: <EditRecipe /> },
+
   {
     path: '/login',
     element: <LoginPage />,
   },
-  { path: '/sign', element: <SignPage /> },
+
+
+  { path: '/signup', element: <SignPage /> },
+
 ]);
 
 export default router;

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import saveCookies from './SaveCookie';
+import { redirect } from 'react-router-dom';
 
 const clientId = process.env.REACT_APP_NAVER_CLIENT_ID;
 const redirectId = process.env.REACT_APP_NAVER_REDIRECTURL;
@@ -18,6 +20,8 @@ export const naverCallback = () => {
 };
 
 export const getNaverToken = async (code) => {
-  const respond = await axios.post('Backend_Naver_API', code);
-  const { acces_token } = respond.data;
+  const res = await axios.post('Backend_Naver_API', code);
+  const { access_token, refresh_token, expires } = res.data;
+  saveCookies(access_token, refresh_token, expires);
+  redirect('/');
 };

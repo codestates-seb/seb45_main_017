@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import { getKakaoToken } from '../functions/KakaoLogin';
 import { getNaverToken } from '../functions/NaverLogin';
 
+import Header from '../components/common/Header';
+
 const Body = styled.div`
   display: flex;
   align-items: center;
@@ -19,7 +21,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  background-color: aqua;
+
   width: 500px;
   height: 500px;
 `;
@@ -41,6 +43,7 @@ const LoginPage = () => {
 
   return (
     <Body>
+      <Header></Header>
       <Container>
         <TextBox></TextBox>
         <LoginForm></LoginForm>
