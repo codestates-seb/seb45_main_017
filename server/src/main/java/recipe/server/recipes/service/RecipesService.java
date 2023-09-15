@@ -29,17 +29,6 @@ public class RecipesService {
 
     private final MemberService memberService;
 
-
-    /*
-    public List<RecipesDto.recipesResponseDto> getAllRecipes() {
-
-        return recipesRepository.findAll();
-    }
-     */
-
-
-
-
     public Page<Recipes> findAllRecipes(int pageNumber, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNumber -1, pageSize, Sort.by("recipesId"));

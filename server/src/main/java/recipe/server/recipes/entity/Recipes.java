@@ -33,11 +33,11 @@ public class Recipes {
     @Column(nullable = false)
     private String recipeBody;
 
-    // 사진 이름
-    //private String fileName;
+    // 오픈 api 데이터 시작점
+    private long startNum;
 
-    // 이미지 저장 경로
-   // private String filePath;
+    // 오픈 api 데이터 마지막점
+    private long endNum;
 
     @Column(nullable = false)
     private LocalDateTime createAt = LocalDateTime.now();
@@ -113,28 +113,25 @@ public class Recipes {
         this.member = member;
     }
 
-    /*
-    public String getFileName() {
+    public long getStartNum() {
 
-        return fileName;
+        return startNum;
     }
 
-    public void setFileName(String fileName) {
+    public void setStartNum(long startNum) {
 
-        this.fileName = fileName;
+        this.startNum = startNum;
     }
 
-    public String getFilePath() {
+    public long getEndNum() {
 
-        return filePath;
+        return endNum;
     }
 
-    public void setFilePath(String filePath) {
+    public void setEndNum(long endNum) {
 
-        this.filePath = filePath;
+        this.endNum = endNum;
     }
-
-     */
 
     public String getCreateAt() {
         return createAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
