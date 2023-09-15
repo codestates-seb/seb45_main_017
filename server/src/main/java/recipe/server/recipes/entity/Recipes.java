@@ -16,7 +16,7 @@ import java.util.List;
 public class Recipes {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long recipesId;
 
     // 레시피 제목
@@ -29,15 +29,13 @@ public class Recipes {
     // 레시피 영양소
     private String nutrition;
 
+    @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
+    private List<Images> images = new ArrayList<>();
+
     // 레시피 내용
     @Column(nullable = false)
     private String recipeBody;
 
-    // 사진 이름
-    //private String fileName;
-
-    // 이미지 저장 경로
-   // private String filePath;
 
     @Column(nullable = false)
     private LocalDateTime createAt = LocalDateTime.now();
@@ -46,12 +44,14 @@ public class Recipes {
     private LocalDateTime modifiedAt;
 
 
-    @ManyToOne (targetEntity = Member.class,  fetch = FetchType.LAZY)
-    @JoinColumn (name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany (targetEntity = Comment.class, mappedBy = "commentId")
+    @OneToMany(mappedBy = "recipes")
     private List<Comment> comments = new ArrayList<>();
+
+    private String imagePath;
 
     public long getRecipesId() {
 
@@ -144,4 +144,16 @@ public class Recipes {
 
         return modifiedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+
 }
+
+
+    // 파일 경로 실패1
+//    public void setImagePath(String imagePath) {
+//        this.imagePath = imagePath;
+//    }
+
+//    public String getImagePath() {
+//        return imagePath;
+//    }
+//}

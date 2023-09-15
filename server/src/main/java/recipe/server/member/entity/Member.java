@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import recipe.server.comment.entity.Comment;
 import recipe.server.myPage.entity.MyPageEntity;
+import recipe.server.recipes.entity.Images;
 import recipe.server.recipes.entity.Recipes;
 
 import javax.persistence.*;
@@ -44,13 +45,16 @@ public class Member {
 
    //TODO : 맞는지 확인 부탁드려요.
 
+  // 관계설정 수정
+
     // Recipe와의 OneToMany 관계 설정
-    @OneToMany(mappedBy = "recipesId", cascade = CascadeType.ALL)
-    private List<Recipes> recipes;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Recipes> recipes = new ArrayList<>();
 
     // Comment와의 OneToMany 관계 설정
-    @OneToMany(mappedBy = "commentId", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
 
     // MyPage와의 OneToOne 관계 설정
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
