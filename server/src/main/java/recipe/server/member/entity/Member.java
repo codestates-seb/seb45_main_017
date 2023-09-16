@@ -32,7 +32,6 @@ public class Member {
   @Column(nullable = false, unique = true)
   private String username;
 
-
   @ElementCollection(fetch = FetchType.EAGER) // 사용자 등록 시 권한 테이블 생성.
   private List<String> roles = new ArrayList<>();
 
@@ -41,6 +40,9 @@ public class Member {
 
   @Column(nullable = false, name = "LAST_MODIFIED_AT")
   private LocalDateTime modifiedAt = LocalDateTime.now();
+
+//  @Column(name = "oauth_type", columnDefinition = "VARCHAR(50)")
+  private String oauthType;
 
    //TODO : 맞는지 확인 부탁드려요.
 

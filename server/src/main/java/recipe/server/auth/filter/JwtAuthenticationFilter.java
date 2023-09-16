@@ -45,7 +45,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
 //        Member member = memberRepository.findByEmail(loginDto.getUsername()).orElseThrow();
+
         Optional<Member> optionalMember = memberRepository.findByEmail(loginDto.getUsername());
+
+//        Optional<Member> optionalMember = memberRepository.findByEmailAndOauthType(loginDto.getUsername());
 
         if (optionalMember.isEmpty()) {
             // 사용자가 존재하지 않음을 알리는 예외 처리

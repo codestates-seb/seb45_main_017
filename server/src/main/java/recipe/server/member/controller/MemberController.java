@@ -3,9 +3,6 @@ package recipe.server.member.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import recipe.server.member.dto.SingleResponseDto;
@@ -14,8 +11,6 @@ import recipe.server.member.entity.Member;
 import recipe.server.member.mapper.MemberMapper;
 import recipe.server.member.service.MemberService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
@@ -48,7 +43,9 @@ public class MemberController {
 
     Member member = memberService.updateMember(mapper.memberPatchDtoToMember(memberPatchDto));
 
-    return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)), HttpStatus.OK);
+    return new ResponseEntity(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
+
+//    return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)), HttpStatus.OK);
   }
 
   @GetMapping("/{member-id}")
@@ -64,5 +61,16 @@ public class MemberController {
     memberService.deleteMember(memberId);
 
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  //todo 리팩터링
+  @GetMapping("/login")
+  public String login() {
+    return "login";
+  }
+
+  @GetMapping("/")
+  public String main() {
+    return "main";
   }
 }
