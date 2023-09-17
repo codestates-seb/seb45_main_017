@@ -29,6 +29,9 @@ public class Recipes {
     // 레시피 영양소
     private String nutrition;
 
+    @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
+    private List<Images> images = new ArrayList<>();
+
     // 레시피 내용
     @Column(nullable = false)
     private String recipeBody;
@@ -46,12 +49,14 @@ public class Recipes {
     private LocalDateTime modifiedAt;
 
 
-    @ManyToOne (targetEntity = Member.class,  fetch = FetchType.LAZY)
-    @JoinColumn (name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany (targetEntity = Comment.class, mappedBy = "commentId")
+    @OneToMany(mappedBy = "recipes")
     private List<Comment> comments = new ArrayList<>();
+
+    private String imagePath;
 
     public long getRecipesId() {
 
@@ -112,29 +117,6 @@ public class Recipes {
 
         this.member = member;
     }
-
-    /*
-    public String getFileName() {
-
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-
-        this.fileName = fileName;
-    }
-
-    public String getFilePath() {
-
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-
-        this.filePath = filePath;
-    }
-
-     */
 
     public String getCreateAt() {
         return createAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

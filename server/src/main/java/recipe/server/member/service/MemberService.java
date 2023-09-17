@@ -4,6 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,6 +19,7 @@ import recipe.server.exception.BusinessLogicException;
 import recipe.server.exception.ExceptionCode;
 import recipe.server.member.entity.Member;
 import recipe.server.member.repository.MemberRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -75,16 +80,16 @@ public class MemberService extends DefaultOAuth2UserService {
     return memberRepository.save(findMember);
   }
 
-  public Member findMember(long memberId) {
+  public Member findMember(Long memberId) {
     return findVerifiedMember(memberId);
   }
 
-  public void deleteMember(long memberId) {
+  public void deleteMember(Long memberId) {
     Member findMember = findVerifiedMember(memberId);
 
     memberRepository.delete(findMember);
   }
-  public Member findVerifiedMember(long memberId) {
+  public Member findVerifiedMember(Long memberId) {
     Optional<Member> optionalMember =
             memberRepository.findById(memberId);
     Member findMember =
@@ -92,6 +97,8 @@ public class MemberService extends DefaultOAuth2UserService {
                     new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     return findMember;
   }
+
+
 
   private void verifyExistsEmail(String email) {
     Optional<Member> member = memberRepository.findByEmail(email);
@@ -137,5 +144,20 @@ public class MemberService extends DefaultOAuth2UserService {
 
   public Member getUserByEmailAndOAuthType(String email, String oauthType) {
     return memberRepository.findByEmailAndOauthType(email, oauthType).orElse(null);
+  }
+
+  // 로그인 맴버 조회
+  public Member findLoginMember() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.isAuthenticated()) {
+      Optional<Member> member = memberRepository.findByEmail(authentication.getName());
+
+      if (member.isPresent()) {
+        return member.get();
+      }
+
+    }
+
+    throw  new BusinessLogicException(ExceptionCode.MEMBER_NOT_AUTHENTICATED);
   }
 }
