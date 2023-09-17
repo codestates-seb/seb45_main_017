@@ -56,12 +56,13 @@ const LoginForm = () => {
   const onValid = async (data) => {
     try {
       const res = await axios.post(
-        'https://b151-119-69-252-33.ngrok-free.app/login',
+        'https://82ed-119-69-252-33.ngrok-free.app/login',
         data,
       );
       const { access_token, refresh_token, expires } = res.data;
+      console.log(res);
       SaveCookies(access_token, refresh_token, expires);
-
+      console.log(access_token);
       navigate('/');
     } catch (error) {
       alert('입력한 아이디 혹은 비밀번호가 올바른지 확인해주십시요');
