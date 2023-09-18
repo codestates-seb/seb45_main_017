@@ -2,17 +2,33 @@ import { styled } from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import Header from '../components/common/Header';
 
 const Editbtn = styled.div`
-  margin-left: 70%;
-  width: 4.5%;
-  border: none;
-  background-color: #569aff;
-  color: white;
-  border-radius: 7px;
-  padding: 15px;
-  &:hover {
-    background-color: rgba(0, 109, 205, 1);
+  display: flex;
+  .edit {
+    margin-left: 70%;
+    width: 4.5%;
+    border: none;
+    background-color: #569aff;
+    color: white;
+    border-radius: 7px;
+    padding: 15px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 109, 205, 1);
+    }
+  }
+  .delete {
+    margin-left: 10px;
+    background-color: #cd5c5c;
+    color: white;
+    border-radius: 7px;
+    padding: 15px;
+    cursor: pointer;
+    &:hover {
+      background-color: #dc143c;
+    }
   }
 `;
 
@@ -51,7 +67,7 @@ const RecipeInfo = styled.div`
     margin-top: 50px;
     margin-bottom: 50px;
     cursor: pointer;
-    width: 50%;
+    width: 30%;
     display: flex;
     margin-left: 850px;
     font-size: 25px;
@@ -93,8 +109,8 @@ const RecipeInfo = styled.div`
     }
   }
   .nutrient {
-    width: 500px;
-    height: 300px;
+    width: 73%;
+    height: 320px;
     margin-top: 10px;
     padding: 5px;
     color: #333333;
@@ -147,7 +163,7 @@ const CommentList = styled.div`
     margin-left: 190px;
     margin-top: 30px;
     padding: 20px;
-    width: 72%;
+    width: 74%;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -163,6 +179,9 @@ const CommentList = styled.div`
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 109, 205, 1);
+    }
   }
   .comment-title {
     font-size: 25px;
@@ -188,6 +207,7 @@ const CommentList = styled.div`
       color: white;
       border-radius: 7px;
       padding: 15px;
+      cursor: pointer;
       &:hover {
         background-color: rgba(0, 109, 205, 1);
       }
@@ -197,9 +217,9 @@ const CommentList = styled.div`
 
 const RecipeDes = () => {
   const [comments, setComments] = useState([
-    { id: 1, content: '새우 맛있겠다' },
-    { id: 2, content: '더미 댓글' },
-    { id: 3, content: '테스트 댓글' },
+    { id: 1, content: '치킨 피자 맥주' },
+    { id: 2, content: '떡볶이 파스타 마라탕' },
+    { id: 3, content: '낙지 새우 곱창' },
   ]);
   const [newComment, setNewComment] = useState('');
   const [isLiked, setIsLiked] = useState(false);
@@ -217,7 +237,7 @@ const RecipeDes = () => {
   };
   //댓글 삭제
 
-  const apiUrl = 'https://8757-45-64-145-147.ngrok-free.app';
+  const apiUrl = 'https://f86d-45-64-145-147.ngrok-free.app';
 
   const handleDeleteComment = (comment) => {
     axios
@@ -274,20 +294,38 @@ const RecipeDes = () => {
         });
     }
   };
+
   useEffect(() => {
-    const OpenApiUrl =
-      'https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/1';
+    const recipeName = encodeURIComponent('새우 두부 계란찜');
+    const apiUrl = `https://33f3-119-69-252-33.ngrok-free.app/recipes/main/RCP_NM?RCP_NM=${recipeName}&pageNumber=1`;
 
     axios
-      .get(OpenApiUrl)
+      .get(apiUrl)
       .then((response) => {
-        const recipeData = response.data.COOKRCP01.row[0];
+        const recipeData = response.data;
         setRecipe(recipeData);
+        console.log(recipeData);
+        console.log('에러없음');
       })
       .catch((error) => {
         console.error('Error fetching recipe:', error);
       });
   }, [id]);
+
+  const handleDeleteRecipe = () => {
+    const apiUrl = '123';
+
+    axios
+      .delete(apiUrl)
+      .then((response) => {
+        console.log('Recipe deleted successfully');
+        setRecipe({});
+        navigate('/recipes');
+      })
+      .catch((error) => {
+        console.error('Error deleting recipe:', error);
+      });
+  };
 
   if (!recipe) {
     return (
@@ -324,9 +362,10 @@ const RecipeDes = () => {
 
   return (
     <>
+      {/* <Header /> */}
       <RecipeInfo>
         <div className="recipe-name">
-          {recipe.RCP_NM} : {recipe.RCP_PAT2}
+          {recipe.rcp_NM} : {recipe.RCP_PAT2}
         </div>
         <div className="section1">
           <div>
@@ -355,12 +394,12 @@ const RecipeDes = () => {
           <div className="side-info">
             <div className="nutTitle">재료</div>
             <div className="nutrient">
-              <div> 1. 중량 : {recipe.INFO_WFT}g</div>
-              <div> 2. 열량 : {recipe.INFO_ENG}g</div>
-              <div> 3. 탄수화물 : {recipe.INFO_CAR}g</div>
-              <div> 4. 단백질 : {recipe.INFO_PRO}g</div>
-              <div> 5. 지방 : {recipe.INFO_FAT}g</div>
-              <div> 6. 나트륨 : {recipe.INFO_NA}g</div>
+              <div> - {recipe.RCP_PARTS_DTLS}</div>
+              <div> 1. 열량 : {recipe.INFO_ENG}g</div>
+              <div> 2. 탄수화물 : {recipe.INFO_CAR}g</div>
+              <div> 3. 단백질 : {recipe.INFO_PRO}g</div>
+              <div> 4. 지방 : {recipe.INFO_FAT}g</div>
+              <div> 5. 나트륨 : {recipe.INFO_NA}g</div>
             </div>
           </div>
         </div>
@@ -381,7 +420,34 @@ const RecipeDes = () => {
           </div>
         </div>
       </RecipeInfo>
-      <Editbtn onClick={handleEditButtonClick}>레시피 수정</Editbtn>
+      <Editbtn>
+        <div
+          className="edit"
+          onClick={handleEditButtonClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              handleEditButtonClick();
+            }
+          }}
+        >
+          레시피 수정
+        </div>
+        <div
+          className="delete"
+          onClick={handleDeleteRecipe}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              handleDeleteRecipe();
+            }
+          }}
+        >
+          레시피 삭제
+        </div>
+      </Editbtn>
       <CommentList>
         <div className="comment-title">댓글 작성</div>
         <div className="create-comment">
