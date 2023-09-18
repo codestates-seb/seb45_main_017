@@ -29,9 +29,6 @@ public class Recipes {
     // 레시피 영양소
     private String nutrition;
 
-    @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
-    private List<Images> images = new ArrayList<>();
-
     // 레시피 내용
     @Column(nullable = false)
     private String recipeBody;
@@ -42,6 +39,7 @@ public class Recipes {
     // 이미지 저장 경로
    // private String filePath;
 
+
     @Column(nullable = false)
     private LocalDateTime createAt = LocalDateTime.now();
 
@@ -50,11 +48,14 @@ public class Recipes {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @OneToMany(mappedBy = "recipes")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
+    private List<Images> images = new ArrayList<>();
 
     private String imagePath;
 

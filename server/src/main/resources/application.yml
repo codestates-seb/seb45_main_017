@@ -47,6 +47,11 @@ email:
   address:
     admin: admin@gmail.com
 jwt:
-  key: codedkowksmdlalskdkfkdksdkoekskdkmvzls3dksz2sld
+  key: ${jwt.key}
   access-token-expiration-minutes: 300
   refresh-token-expiration-minutes: 600
+
+recipes:
+  openapi-key: ${recipes.openapi-key}
+
+

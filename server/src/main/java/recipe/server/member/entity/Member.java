@@ -61,5 +61,13 @@ public class Member {
     // MyPage와의 OneToOne 관계 설정
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private MyPageEntity myPage;
+
+  public Member(String email, String password, String username, List<String> roles) {
+    this.email = email;
+    this.password = password;
+    this.username = username;
+    this.roles = roles;
+  }
 }
+
 
