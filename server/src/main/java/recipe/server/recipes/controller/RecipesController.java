@@ -1,9 +1,11 @@
 package recipe.server.recipes.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,6 +53,9 @@ public class RecipesController {
     private final ImageRepository imageRepository;
     private final ImageService imageService;
 
+    @Getter
+    @Value("${recipes.openapi-key}")
+    private String apikey;
 
 
     // TODO : 레시피 찜 -> 마이 페이지
@@ -83,12 +88,11 @@ public class RecipesController {
     }
 
     // 레시피 조회 -> 오픈 api 가져오기 (여러 레시피 보여주기)
-    //https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/100
 
     @GetMapping("/main")
     public ResponseEntity<List<RecipesDto.ApiMainDto>> fetch() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/100";
+        String url = "https://openapi.foodsafetykorea.go.kr/api/" + apikey + "/COOKRCP01/json/1/100";
 
         // API에서 JSON 데이터 가져오기
         String jsonString = restTemplate.getForObject(url, String.class);
@@ -123,11 +127,11 @@ public class RecipesController {
 
 
     // 레시피 조회 -> 오픈 api 가져오기 (하나의 레시피 보여주기)
-    // http://openapi.foodsafetykorea.go.kr/api/sample/COOKRCP01/xml/1/5/RCP_NM=값
+
     @GetMapping("/main/{RCP_NM}")
     public ResponseEntity<List<RecipesDto.ApiResponseDto>> fetch(@RequestParam String RCP_NM) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/100/RCP_NM=" + RCP_NM;
+        String url = "https://openapi.foodsafetykorea.go.kr/api/" + apikey + "/COOKRCP01/json/1/100/RCP_NM=" + RCP_NM;
 
         // API에서 JSON 데이터 가져오기
         String jsonString = restTemplate.getForObject(url, String.class);

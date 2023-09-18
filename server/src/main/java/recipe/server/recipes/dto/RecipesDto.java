@@ -70,6 +70,7 @@ public class RecipesDto {
         private MultipartFile image;
 
 
+
 //        private MultipartFile image;
 
       //  private String fileName;

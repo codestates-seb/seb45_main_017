@@ -50,6 +50,9 @@ dependencies {
    // implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
 
+    runtimeOnly 'mysql:mysql-connector-java:8.0.32'
+
+
 
 
 
