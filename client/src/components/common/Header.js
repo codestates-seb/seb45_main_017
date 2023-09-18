@@ -108,7 +108,7 @@ const Header = () => {
           <span
             role="presentation"
             onClick={() => {
-              navigate('/');
+              navigate('/resipes');
             }}
           >
             Search Chef
