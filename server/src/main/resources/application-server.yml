@@ -25,3 +25,4 @@ jwt:
 
 recipes:
   openapi-key: ${recipes.openapi-key}
+
