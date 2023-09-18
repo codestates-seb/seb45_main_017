@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
 const Editbtn = styled.div`
-  margin-left: 45%;
+  margin-left: 70%;
   width: 4.5%;
   border: none;
   background-color: #569aff;
@@ -33,10 +33,35 @@ const Loadingtext = styled.div`
 `;
 
 const RecipeInfo = styled.div`
+  .section3 {
+    margin-left: 240px;
+  }
+  .nutTitle {
+    font-size: 35px;
+    font-weight: bold;
+    background-color: rgba(234, 234, 234, 1);
+    height: 10px;
+    width: 75%;
+    padding: 30px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
   .heart {
-    margin-top: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     cursor: pointer;
-    width: 10px;
+    width: 50%;
+    display: flex;
+    margin-left: 850px;
+    font-size: 25px;
+    font-weight: bold;
+    > span {
+      text-decoration: underline;
+    }
+    > p {
+      margin-left: 10px;
+    }
   }
   .section1 {
     display: flex;
@@ -44,21 +69,25 @@ const RecipeInfo = styled.div`
     margin-top: 50px;
   }
   .recipe-name {
-    height: 30px;
+    height: 60px;
     margin-top: 30px;
-    font-size: 25px;
+    font-size: 35px;
     font-weight: bold;
+    margin-left: 300px;
+    border-bottom: 1px solid rgba(181, 181, 181, 1);
+    width: 66%;
   }
   .hashtag {
     height: 30px;
     margin-top: 30px;
     color: blue;
     font-size: 25px;
+    margin-left: 270px;
   }
   .main-img {
     > img {
-      width: 500px;
-      height: 400px;
+      width: 600px;
+      height: 500px;
       border: none;
       border-radius: 15px;
     }
@@ -66,14 +95,13 @@ const RecipeInfo = styled.div`
   .nutrient {
     width: 500px;
     height: 300px;
-    margin-top: 35px;
-    padding: 3px;
-    background-color: #90ee90;
-    border-radius: 15px;
+    margin-top: 10px;
+    padding: 5px;
     color: #333333;
+    font-size: 25px;
     > div {
-      margin-top: 17px;
-      margin-left: 30px;
+      margin-top: 20px;
+      margin-left: 25px;
     }
   }
   .side-info {
@@ -84,20 +112,28 @@ const RecipeInfo = styled.div`
   .section2 {
     display: flex;
     flex-direction: column;
-    margin-left: 295px;
+    margin-left: 310px;
   }
   .title {
     margin-top: 30px;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: bold;
+    background-color: rgba(234, 234, 234, 1);
+    height: 10px;
+    width: 75%;
+    padding: 30px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
   }
   .plan {
     width: 85%;
-    margin-top: 20px;
+    margin-top: 10px;
     > ul {
       > li {
-        margin-top: 50px;
-        font-size: 20px;
+        margin-top: 40px;
+        font-size: 25px;
+        margin-left: 30px;
       }
     }
   }
@@ -108,14 +144,16 @@ const CommentList = styled.div`
   width: 85%;
   margin-top: 30px;
   .comment-box {
-    margin: 20px;
-    padding: 15px;
+    margin-left: 190px;
+    margin-top: 30px;
+    padding: 20px;
+    width: 72%;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
   .comment-box p {
-    margin: 0;
+    margin: 10px;
   }
   .comment-box button {
     margin-left: 10px;
@@ -127,15 +165,20 @@ const CommentList = styled.div`
     cursor: pointer;
   }
   .comment-title {
-    font-size: 30px;
-    padding: 30px;
+    font-size: 25px;
+    padding: 20px;
+    color: rgba(139, 139, 139, 1);
+    border-bottom: 1px solid rgba(139, 139, 139, 1);
+    margin-left: 190px;
+    width: 73%;
+    margin-bottom: 50px;
   }
   .create-comment {
     display: flex;
     > textarea {
-      margin-left: 30px;
-      width: 85%;
-      height: 50px;
+      margin-left: 190px;
+      width: 80%;
+      height: 150px;
     }
     > button {
       margin-left: 20px;
@@ -282,39 +325,42 @@ const RecipeDes = () => {
   return (
     <>
       <RecipeInfo>
+        <div className="recipe-name">
+          {recipe.RCP_NM} : {recipe.RCP_PAT2}
+        </div>
         <div className="section1">
           <div>
             <div className="main-img">
               <img src={recipe.ATT_FILE_NO_MAIN} alt={recipe.RCP_NM} />
             </div>
-            <div className="recipe-name">
-              {recipe.RCP_NM} : {recipe.RCP_PAT2}
-            </div>
             <div className="hashtag">#{recipe.HASH_TAG}</div>
           </div>
+        </div>
+        <div className="section3">
+          <div
+            className="heart"
+            role="button"
+            onClick={handleToggleLike}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                handleToggleLike();
+              }
+            }}
+            tabIndex="0"
+            aria-label={isLiked ? 'Unlike' : 'Like'}
+          >
+            <span>레시피 찜하기</span>
+            <p>{isLiked ? '❤️' : '🤍'}</p>
+          </div>
           <div className="side-info">
-            <div>재료</div>
+            <div className="nutTitle">재료</div>
             <div className="nutrient">
-              <div>중량 : {recipe.INFO_WFT}g</div>
-              <div>열량 : {recipe.INFO_ENG}g</div>
-              <div>탄수화물 : {recipe.INFO_CAR}g</div>
-              <div>단백질 : {recipe.INFO_PRO}g</div>
-              <div>지방 : {recipe.INFO_FAT}g</div>
-              <div>나트륨 : {recipe.INFO_NA}g</div>
-            </div>
-            <div
-              className="heart"
-              role="button"
-              onClick={handleToggleLike}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  handleToggleLike();
-                }
-              }}
-              tabIndex="0"
-              aria-label={isLiked ? 'Unlike' : 'Like'}
-            >
-              {isLiked ? '❤️' : '🤍'}
+              <div> 1. 중량 : {recipe.INFO_WFT}g</div>
+              <div> 2. 열량 : {recipe.INFO_ENG}g</div>
+              <div> 3. 탄수화물 : {recipe.INFO_CAR}g</div>
+              <div> 4. 단백질 : {recipe.INFO_PRO}g</div>
+              <div> 5. 지방 : {recipe.INFO_FAT}g</div>
+              <div> 6. 나트륨 : {recipe.INFO_NA}g</div>
             </div>
           </div>
         </div>
@@ -324,9 +370,11 @@ const RecipeDes = () => {
             <ul>
               {Array.from({ length: 20 }, (_, i) => i + 1).map((index) => (
                 <li key={`manual-${index}`}>
-                  {recipe[`MANUAL${index.toString().padStart(2, '0')}`].slice(
-                    2,
-                  )}
+                  {recipe[`MANUAL${index.toString().padStart(2, '0')}`]
+                    ? `${index}. ${recipe[
+                        `MANUAL${index.toString().padStart(2, '0')}`
+                      ].slice(2)}`
+                    : null}
                 </li>
               ))}
             </ul>
@@ -335,7 +383,7 @@ const RecipeDes = () => {
       </RecipeInfo>
       <Editbtn onClick={handleEditButtonClick}>레시피 수정</Editbtn>
       <CommentList>
-        <div className="comment-title">댓글</div>
+        <div className="comment-title">댓글 작성</div>
         <div className="create-comment">
           <textarea
             value={newComment}

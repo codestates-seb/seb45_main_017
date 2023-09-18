@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const CategoryContainer = styled.div`
   display: flex;
@@ -14,30 +15,42 @@ const CategoryUl = styled.ul`
 `;
 
 const CategoryLi = styled.li`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
   margin-right: 20px;
+
+  background-color: ${(props) => (props.active ? 'skyblue' : '')};
 `;
 
-const CaButton = styled.button`
-  width: 70px;
-  height: 70px;
+const LiBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
+const CaImg = styled.img`
+  width: 100px;
+  height: 100px;
   border-radius: 100px;
   cursor: pointer;
+`;
+
+const CaH4 = styled.h4`
+  text-decoration-line: none;
   font-size: 14px;
   font-family: sans-serif;
   font-weight: bolder;
-  color: white;
-  background-color: #569aff;
-  &:hover {
-    background-color: rgba(0, 109, 205, 1);
-  }
+  color: black;
 `;
 
 // 카테고리
 function Category({ menu, obj, setSearchData }) {
+  const [color, setColor] = useState();
+
   const HandleClickIndex = (index) => {
     obj.name = menu[index].name;
     setSearchData('');
+    setColor(index);
   };
 
   return (
@@ -45,11 +58,19 @@ function Category({ menu, obj, setSearchData }) {
       <CategoryUl>
         {menu.map((el, index) => {
           return (
-            <CategoryLi key={index} value={menu[index].name}>
+            <CategoryLi
+              key={index}
+              value={menu[index].name}
+              active={color === index}
+              onClick={() => HandleClickIndex(index)}
+            >
               <Link to={`/recipes/${menu[index].name}/${1}`}>
-                <CaButton onClick={() => HandleClickIndex(index)}>
-                  {el.name}
-                </CaButton>
+                <LiBox>
+                  <CaImg key={el.id} src={el.picture} alt={`image ${el.id}`} />
+                </LiBox>
+                <LiBox>
+                  <CaH4>{el.name}</CaH4>
+                </LiBox>
               </Link>
             </CategoryLi>
           );
@@ -71,3 +92,9 @@ Category.propTypes = {
 };
 
 export default Category;
+{
+  /* <CaButton onClick={() => HandleClickIndex(index)}>
+                  <CaImg key={el.id} src={el.picture} alt={`image ${el.id}`} />
+                  {el.name}
+                </CaButton> */
+}
