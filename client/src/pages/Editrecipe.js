@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
+import Header from '../components/common/Header';
 
 const InputContainer = styled.div`
   display: flex;
@@ -57,8 +58,9 @@ const InputContainer = styled.div`
     margin-bottom: 25px;
   }
   .preview-image {
-    max-width: 100%;
+    width: 600px;
     z-index: 100000;
+    height: 323px;
   }
   .error-message {
     color: red;
@@ -241,6 +243,7 @@ const EditRecipe = () => {
 
   return (
     <>
+      <Header />
       <InputContainer>
         <div className="Crtitle">레시피 수정하기</div>
         <div className="recipe-form">

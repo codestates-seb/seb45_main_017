@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/common/Header';
 
 const InputContainer = styled.div`
   display: flex;
@@ -57,7 +58,8 @@ const InputContainer = styled.div`
     margin-bottom: 25px;
   }
   .preview-image {
-    max-width: 100%;
+    width: 600px;
+    height: 323px;
     z-index: 100000;
   }
   .error-message {
@@ -206,9 +208,9 @@ const CreateRecipe = () => {
     recipeData.append('recipeType', selectedCategory);
     recipeData.append('nutrition', nutrients);
     recipeData.append('recipeBody', cookingMethod);
-    recipeData.append('file', selectedImage);
+    recipeData.append('image', selectedImage);
 
-    const apiUrl = 'https://2422-119-69-252-33.ngrok-free.app';
+    const apiUrl = 'https://33f3-119-69-252-33.ngrok-free.app';
 
     try {
       const response = await axios.post(`${apiUrl}/recipes`, recipeData, {
@@ -217,7 +219,7 @@ const CreateRecipe = () => {
         },
       });
       console.log('Recipe created:', response.data);
-      navigate('/recipes/main');
+      navigate('/recipes');
     } catch (error) {
       console.error('Error creating recipe:', error);
     }
@@ -225,6 +227,7 @@ const CreateRecipe = () => {
 
   return (
     <>
+      {/* <Header /> */}
       <InputContainer>
         <div className="Crtitle">레시피 작성하기</div>
         <div className="recipe-form">
