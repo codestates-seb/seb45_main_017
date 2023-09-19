@@ -25,7 +25,7 @@ public class ImageService {
 
 
 //    @Value("${image.upload.directory}")
-    @Value("/User/ekdud/Desktop")
+    @Value("/User/images/Desktop")
     private String uploadDirectory; // 이미지를 저장할 디렉토리
 
     @Transactional
