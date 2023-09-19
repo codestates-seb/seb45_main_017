@@ -45,10 +45,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
 //        Member member = memberRepository.findByEmail(loginDto.getUsername()).orElseThrow();
-
         Optional<Member> optionalMember = memberRepository.findByEmail(loginDto.getUsername());
-
-//        Optional<Member> optionalMember = memberRepository.findByEmailAndOauthType(loginDto.getUsername());
 
         if (optionalMember.isEmpty()) {
             // 사용자가 존재하지 않음을 알리는 예외 처리
@@ -65,6 +62,31 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return authenticationManager.authenticate(authenticationToken);
     }
 
+    /**
+     *  헤더에 토큰 넣는 코드
+     */
+
+//    @Override
+//    protected void successfulAuthentication(HttpServletRequest request,
+//                                            HttpServletResponse response,
+//                                            FilterChain chain,
+//                                            Authentication authResult) throws ServletException, IOException {
+//
+//        Member member = (Member) authResult.getPrincipal();
+//
+//        String accessToken = delegateAccessToken(member);
+//        String refreshToken = delegateRefreshToken(member);
+//
+//        response.setHeader("Authorization", "Bearer " + accessToken);
+//        response.setHeader("Refresh", refreshToken);
+//
+//        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
+//
+//    }
+
+    /**
+     *  "Authorization" 및 "Refresh" 값을 JSON 형식의 응답으로 반환 코드
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
@@ -76,11 +98,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
-        response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
+        Map<String, String> tokenResponse = new HashMap<>();
+        tokenResponse.put("access_token", "Bearer " + accessToken);
+        tokenResponse.put("refresh_token", refreshToken);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(tokenResponse));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
-
     }
 
     private String delegateAccessToken(Member member) {
