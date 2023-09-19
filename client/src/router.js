@@ -40,9 +40,7 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
 
-
   { path: '/signup', element: <SignPage /> },
-
 ]);
 
 export default router;

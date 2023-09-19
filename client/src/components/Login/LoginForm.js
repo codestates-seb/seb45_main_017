@@ -53,14 +53,13 @@ const LoginForm = () => {
   } = useForm();
 
   // 로그인 폼 제출 시 작동 함수
-  const onValid = async (data) => {
+  const onValid = async (formData) => {
     try {
       const res = await axios.post(
-        'https://82ed-119-69-252-33.ngrok-free.app/login',
-        data,
+        'https://13a6-119-69-252-33.ngrok-free.app/login',
+        formData,
       );
       const { access_token, refresh_token, expires } = res.data;
-      console.log(res);
       SaveCookies(access_token, refresh_token, expires);
 
       navigate('/recipes');
