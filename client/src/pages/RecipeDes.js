@@ -1,8 +1,7 @@
 import { styled } from 'styled-components';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Header from '../components/common/Header';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Editbtn = styled.div`
   display: flex;
@@ -226,9 +225,10 @@ const RecipeDes = () => {
   const [recipe, setRecipe] = useState(null);
   const [editingComment, setEditingComment] = useState(null);
 
-  const { id } = useParams();
-
-  console.log(id);
+  const { recipeId } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const recipe_nm = searchParams.get('recipe_nm');
 
   const navigate = useNavigate();
 
@@ -237,11 +237,11 @@ const RecipeDes = () => {
   };
   //댓글 삭제
 
-  const apiUrl = 'https://f86d-45-64-145-147.ngrok-free.app';
+  const apiUrl = 'https://33fe-45-64-145-74.ngrok-free.app';
 
   const handleDeleteComment = (comment) => {
     axios
-      .delete(`${apiUrl}/recipes/1/comment/1`)
+      .delete(`${apiUrl}/recipes/${recipeId}/comment/1`)
       .then(() => {
         const updatedComments = comments.filter((c) => c.id !== comment.id);
         setComments(updatedComments);
@@ -258,7 +258,7 @@ const RecipeDes = () => {
   const handleSaveComment = (editedComment) => {
     // 댓글 수정
     axios
-      .patch(`${apiUrl}/recipes/1/comment/1`, {
+      .patch(`${apiUrl}/recipes/${recipeId}/comment/1`, {
         content: editedComment.content,
       })
       .then(() => {
@@ -282,7 +282,7 @@ const RecipeDes = () => {
     //댓글 작성
     if (newComment.trim() !== '') {
       axios
-        .post(`${apiUrl}/recipes/1/comment`, {
+        .post(`${apiUrl}/recipes/${recipeId}/comment`, {
           content: newComment,
         })
         .then((response) => {
@@ -295,12 +295,16 @@ const RecipeDes = () => {
     }
   };
 
+  const headers = {
+    'ngrok-skip-browser-warning': '69420',
+    'Content-Type': 'application/json',
+  };
+
   useEffect(() => {
-    const recipeName = encodeURIComponent('새우 두부 계란찜');
-    const apiUrl = `https://33f3-119-69-252-33.ngrok-free.app/recipes/main/RCP_NM?RCP_NM=${recipeName}&pageNumber=1`;
+    const apiUrl = `https://33fe-45-64-145-74.ngrok-free.app/recipes/main/RCP_NM?RCP_NM=${recipe_nm}`;
 
     axios
-      .get(apiUrl)
+      .get(apiUrl, { headers })
       .then((response) => {
         const recipeData = response.data;
         setRecipe(recipeData);
@@ -310,11 +314,9 @@ const RecipeDes = () => {
       .catch((error) => {
         console.error('Error fetching recipe:', error);
       });
-  }, [id]);
+  }, [recipeId]);
 
   const handleDeleteRecipe = () => {
-    const apiUrl = '123';
-
     axios
       .delete(apiUrl)
       .then((response) => {
@@ -341,7 +343,7 @@ const RecipeDes = () => {
   const handleToggleLike = () => {
     if (!isLiked) {
       axios
-        .post(`${apiUrl}/recipes`, { recipeId: id })
+        .post(`${apiUrl}/recipes`)
         .then(() => {
           setIsLiked(true);
         })
@@ -350,7 +352,7 @@ const RecipeDes = () => {
         });
     } else {
       axios
-        .delete(`${apiUrl}/recipes/1`)
+        .delete(`${apiUrl}/recipes/${recipeId}`)
         .then(() => {
           setIsLiked(false);
         })
@@ -365,14 +367,14 @@ const RecipeDes = () => {
       {/* <Header /> */}
       <RecipeInfo>
         <div className="recipe-name">
-          {recipe.rcp_NM} : {recipe.RCP_PAT2}
+          {recipe[0].rcp_NM} : {recipe[0].rcp_PAT2}
         </div>
         <div className="section1">
           <div>
             <div className="main-img">
-              <img src={recipe.ATT_FILE_NO_MAIN} alt={recipe.RCP_NM} />
+              <img src={recipe[0].att_FILE_NO_MAIN} alt={recipe[0].RCP_NM} />
             </div>
-            <div className="hashtag">#{recipe.HASH_TAG}</div>
+            <div className="hashtag">#{recipe[0].hash_TAG}</div>
           </div>
         </div>
         <div className="section3">
@@ -394,12 +396,12 @@ const RecipeDes = () => {
           <div className="side-info">
             <div className="nutTitle">재료</div>
             <div className="nutrient">
-              <div> - {recipe.RCP_PARTS_DTLS}</div>
-              <div> 1. 열량 : {recipe.INFO_ENG}g</div>
-              <div> 2. 탄수화물 : {recipe.INFO_CAR}g</div>
-              <div> 3. 단백질 : {recipe.INFO_PRO}g</div>
-              <div> 4. 지방 : {recipe.INFO_FAT}g</div>
-              <div> 5. 나트륨 : {recipe.INFO_NA}g</div>
+              <div> - {recipe[0].rcp_PARTS_DTLS}</div>
+              <div> 1. 열량 : {recipe[0].info_ENG}g</div>
+              <div> 2. 탄수화물 : {recipe[0].info_CAR}g</div>
+              <div> 3. 단백질 : {recipe[0].info_PRO}g</div>
+              <div> 4. 지방 : {recipe[0].info_FAT}g</div>
+              <div> 5. 나트륨 : {recipe[0].info_NA}g</div>
             </div>
           </div>
         </div>
@@ -409,9 +411,10 @@ const RecipeDes = () => {
             <ul>
               {Array.from({ length: 20 }, (_, i) => i + 1).map((index) => (
                 <li key={`manual-${index}`}>
-                  {recipe[`MANUAL${index.toString().padStart(2, '0')}`]
-                    ? `${index}. ${recipe[
-                        `MANUAL${index.toString().padStart(2, '0')}`
+                  {recipe[0] &&
+                  recipe[0][`manual${index.toString().padStart(2, '0')}`]
+                    ? `${index}. ${recipe[0][
+                        `manual${index.toString().padStart(2, '0')}`
                       ].slice(2)}`
                     : null}
                 </li>
