@@ -113,7 +113,7 @@ const Header = () => {
           <span
             role="presentation"
             onClick={() => {
-              navigate('/resipes');
+              navigate('/recipes');
             }}
           >
             Search Chef
