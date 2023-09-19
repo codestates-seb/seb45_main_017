@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface RecipesRepository extends JpaRepository<Recipes, Long> {
 
-
+    List<Recipes> findByRecipeTitleContaining(String keyword);
 }

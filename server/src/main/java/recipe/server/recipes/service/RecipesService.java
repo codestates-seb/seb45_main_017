@@ -1,10 +1,8 @@
 package recipe.server.recipes.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recipe.server.exception.BusinessLogicException;
@@ -15,6 +13,7 @@ import recipe.server.recipes.entity.Recipes;
 import recipe.server.recipes.repository.ImageRepository;
 import recipe.server.recipes.repository.RecipesRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -28,13 +27,19 @@ public class RecipesService {
 
     private final ImageRepository imageRepository;
 
+    public Page<Recipes> searchRecipes(String keyword, int pageNumber, int pageSize) {
+        // 검색어를 사용하여 레시피를 검색
+        List<Recipes> searchResults = recipesRepository.findByRecipeTitleContaining(keyword);
 
-    /*
-    public List<RecipesDto.recipesResponseDto> getAllRecipes() {
+        // 검색 결과를 페이지네이션
+        int startIdx = (pageNumber - 1) * pageSize;
+        int endIdx = Math.min(startIdx + pageSize, searchResults.size());
+        List<Recipes> pageResults = searchResults.subList(startIdx, endIdx);
 
-        return recipesRepository.findAll();
+        // 페이지 정보를 포함한 Page 객체 생성
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        return new PageImpl<>(pageResults, pageable, searchResults.size());
     }
-     */
 
 
     public Page<Recipes> findAllRecipes(int pageNumber, int pageSize) {
@@ -109,5 +114,4 @@ public class RecipesService {
 
         memberService.findMember(recipes.getMember().getMemberId());
     }
-
 }

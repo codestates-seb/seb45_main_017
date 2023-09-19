@@ -20,6 +20,13 @@ public class RecipesDto {
 
     @Getter
     @Setter
+    public static class mainAndRecipesDto {
+        private List<RecipesDto.ApiMainDto> mainData;
+        private RecipesDto.PageResponseDto recipes;
+    }
+
+    @Getter
+    @Setter
     public static class recipesResponseDto {
 
         private Long recipesId;
@@ -122,12 +129,14 @@ public class RecipesDto {
     public static class ApiMainDto {
         private String RCP_NM; // 메뉴명
         private String ATT_FILE_NO_MAIN; // 이미지 경로
+        private String RCP_PAT2; // 요리종류
 
         @ElementCollection
-        public static ApiMainDto mainResponseDto(JSONObject item) {
+        public static ApiMainDto mainResponseDto(JSONObject rowArray) {
             ApiMainDto dto = ApiMainDto.builder()
-                    .RCP_NM((String) item.get("RCP_NM"))
-                    .ATT_FILE_NO_MAIN((String) item.get("ATT_FILE_NO_MAIN"))
+                    .RCP_NM((String) rowArray.get("RCP_NM"))
+                    .ATT_FILE_NO_MAIN((String) rowArray.get("ATT_FILE_NO_MAIN"))
+                    .RCP_PAT2((String) rowArray.get("RCP_PAT2"))
                     .build();
 
             return dto;

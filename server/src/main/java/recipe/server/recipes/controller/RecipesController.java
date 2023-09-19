@@ -10,15 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import recipe.server.member.service.MemberService;
 import recipe.server.recipes.dto.RecipesDto;
-import recipe.server.recipes.entity.Recipe;
 import recipe.server.recipes.entity.Recipes;
 import recipe.server.recipes.mapper.RecipesMapper;
 import recipe.server.recipes.repository.ImageRepository;
-import recipe.server.recipes.repository.RecipeRepository;
 import recipe.server.recipes.service.ImageService;
 import recipe.server.recipes.service.RecipesService;
 
@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
+import static recipe.server.recipes.dto.RecipesDto.ApiResponseDto.makeApiResponseDto;
 import static retrofit2.Response.success;
 
 @RestController
@@ -47,8 +48,6 @@ public class RecipesController {
 
     private final RecipesService recipesService;
     private final RecipesMapper recipesMapper;
-    private final RecipeRepository recipeRepository;
-   // private final OpenApiManager openApiManager;
     private final MemberService memberService;
     private final ImageRepository imageRepository;
     private final ImageService imageService;
@@ -60,10 +59,66 @@ public class RecipesController {
 
     // TODO : 레시피 찜 -> 마이 페이지
     // TODO : 레시피 검색(필터?)
-    // TODO : 모든 레시피 보여주기 -> 오픈 api 레시피 + post 레시피
+
+/*
+    // 모든 레시피 보여주기
+    @GetMapping("/main/test")
+    public ResponseEntity<RecipesDto.mainAndRecipesDto> fetchMainAndRecipes(
+            @RequestParam @Positive int pageNumber,
+            @RequestParam @Positive int pageSize,
+            @RequestParam(required = false) String searchKeyword) {
+
+        // 레시피 데이터 가져오기
+        Page<Recipes> recipes;
+        if (StringUtils.hasText(searchKeyword)) {
+            recipes = recipesService.searchRecipes(searchKeyword, pageNumber, pageSize);
+        } else {
+            recipes = recipesService.findAllRecipes(pageNumber, pageSize);
+        }
+        RecipesDto.PageResponseDto recipesPageResponseDto = recipesMapper.recipesPageToPageResponseDto(recipes);
+
+        // 메인 데이터 가져오기
+        RestTemplate restTemplate = new RestTemplate();
+        String mainUrl = "https://openapi.foodsafetykorea.go.kr/api/e907859720c24072b3be/COOKRCP01/json/1/100";
+        String mainJsonString = restTemplate.getForObject(mainUrl, String.class);
+        JSONParser jsonParser = new JSONParser();
+        List<RecipesDto.ApiMainDto> mainResult = new ArrayList<>();
+
+        try {
+            JSONObject mainJsonObject = (JSONObject) jsonParser.parse(mainJsonString);
+            JSONObject mainCookRcp01 = (JSONObject) mainJsonObject.get("COOKRCP01");
+            JSONArray mainRowArray = (JSONArray) mainCookRcp01.get("row");
+
+            for (int i = 0; i < mainRowArray.size(); i++) {
+                JSONObject mainRowObject = (JSONObject) mainRowArray.get(i);
+                String repNm = (String) mainRowObject.get("RCP_NM");
+                String attFileNoMain = (String) mainRowObject.get("ATT_FILE_NO_MAIN");
+
+                RecipesDto.ApiMainDto dto = new RecipesDto.ApiMainDto();
+                dto.setRCP_NM(repNm);
+                dto.setATT_FILE_NO_MAIN(attFileNoMain);
+
+                mainResult.add(dto);
+            }
+
+        } catch (Exception e) {
+            // 예외 처리
+            e.printStackTrace();
+        }
+
+        // 조합된 데이터를 하나의 객체로 반환
+        RecipesDto.mainAndRecipesDto mainAndRecipesDto = new RecipesDto.mainAndRecipesDto();
+        mainAndRecipesDto.setRecipes(recipesPageResponseDto);
+        mainAndRecipesDto.setMainData(mainResult);
+
+        return new ResponseEntity<>(mainAndRecipesDto, HttpStatus.OK);
+    }
+
+ */
+
+
 
     // 레시피 작성 (로그인 시)
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity postRecipes(@Valid @ModelAttribute RecipesDto.recipesPostDto postDto) {
 
@@ -109,10 +164,12 @@ public class RecipesController {
                 JSONObject rowObject = (JSONObject) rowArray.get(i);
                 String repNm = (String) rowObject.get("RCP_NM");
                 String attFileNoMain = (String) rowObject.get("ATT_FILE_NO_MAIN");
+                String rcpPat2 = (String) rowObject.get("RCP_PAT2");
 
                 RecipesDto.ApiMainDto dto = new RecipesDto.ApiMainDto();
                 dto.setRCP_NM(repNm);
                 dto.setATT_FILE_NO_MAIN(attFileNoMain);
+                dto.setRCP_PAT2(rcpPat2);
 
                 result.add(dto);
             }
@@ -127,7 +184,6 @@ public class RecipesController {
 
 
     // 레시피 조회 -> 오픈 api 가져오기 (하나의 레시피 보여주기)
-
     @GetMapping("/main/{RCP_NM}")
     public ResponseEntity<List<RecipesDto.ApiResponseDto>> fetch(@RequestParam String RCP_NM) {
         RestTemplate restTemplate = new RestTemplate();
@@ -306,9 +362,7 @@ public class RecipesController {
         return new ResponseEntity<>(recipesMapper.recipesToRecipesResponse(recipes), HttpStatus.OK);
     }
 
-    //TODO : pageable
-
-
+    /*
     // 모든 레시피 조회
     @GetMapping
     public ResponseEntity findAllRecipes(@RequestParam @Positive int pageNumber,
@@ -318,6 +372,7 @@ public class RecipesController {
         RecipesDto.PageResponseDto pageResponseDto = recipesMapper.recipesPageToPageResponseDto(recipes);
         return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
     }
+     */
 
 
     // 레시피 수정 (로그인 시 -> 자신이 작성한 레시피만)
@@ -343,16 +398,5 @@ public class RecipesController {
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-    }
-
-    // TODO : 레시피 검색 -> 필터
-    // TODO : 레시피 추천
-
-    // 더미 데이터 가져오기
-    @GetMapping("/data")
-    public ResponseEntity getAllRecipes() {
-
-        List<Recipe> recipes = recipeRepository.findAll();
-        return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 }

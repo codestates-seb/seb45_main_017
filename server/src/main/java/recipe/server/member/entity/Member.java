@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import recipe.server.comment.entity.Comment;
-import recipe.server.myPage.entity.MyPageEntity;
-import recipe.server.recipes.entity.Images;
+//import recipe.server.myPage.entity.MyPage;
 import recipe.server.recipes.entity.Recipes;
 
 import javax.persistence.*;
@@ -59,8 +58,8 @@ public class Member {
 
 
     // MyPage와의 OneToOne 관계 설정
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private MyPageEntity myPage;
+    //@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    //private MyPage myPage;
 
   public Member(String email, String password, String username, List<String> roles) {
     this.email = email;
@@ -68,6 +67,7 @@ public class Member {
     this.username = username;
     this.roles = roles;
   }
+
 }
 
 

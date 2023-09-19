@@ -3,6 +3,7 @@ package recipe.server.recipes.entity;
 import lombok.*;
 import recipe.server.comment.entity.Comment;
 import recipe.server.member.entity.Member;
+//import recipe.server.myPage.entity.MyPage;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class Recipes {
     @Column(nullable = false)
     private String recipeBody;
 
+
     // 사진 이름
     //private String fileName;
 
@@ -54,8 +56,13 @@ public class Recipes {
     @OneToMany(mappedBy = "recipes")
     private List<Comment> comments = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
     private List<Images> images = new ArrayList<>();
+
+   // @OneToMany(mappedBy = "recipes")
+    //private List<MyPage> myPages = new ArrayList<>();
+
 
     private String imagePath;
 

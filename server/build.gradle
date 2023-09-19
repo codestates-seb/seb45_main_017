@@ -51,10 +51,13 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpcore:4.4.15'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'com.google.code.gson:gson'
-   // implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
 
     runtimeOnly 'mysql:mysql-connector-java:8.0.32'
+
+    // 오픈 api + 작성한 레시피 같이 보여주기
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 
 
