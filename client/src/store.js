@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 let sidebarState = createSlice({
   name: 'sidebarState',
-  initialState: false,
+  initialState: true,
   reducers: {
     changeSideState(state) {
       return !state;
