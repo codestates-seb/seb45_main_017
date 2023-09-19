@@ -6,6 +6,7 @@ import { useState } from 'react';
 const CategoryContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin: 30px 0px 10px 0px;
 `;
 
 const CategoryUl = styled.ul`
@@ -92,9 +93,3 @@ Category.propTypes = {
 };
 
 export default Category;
-{
-  /* <CaButton onClick={() => HandleClickIndex(index)}>
-                  <CaImg key={el.id} src={el.picture} alt={`image ${el.id}`} />
-                  {el.name}
-                </CaButton> */
-}
