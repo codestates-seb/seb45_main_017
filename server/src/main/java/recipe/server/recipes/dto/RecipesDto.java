@@ -127,21 +127,24 @@ public class RecipesDto {
     @NoArgsConstructor
     @Builder
     public static class ApiMainDto {
+        private Long recipesId; // 레시피 ID
         private String RCP_NM; // 메뉴명
         private String ATT_FILE_NO_MAIN; // 이미지 경로
         private String RCP_PAT2; // 요리종류
 
         @ElementCollection
-        public static ApiMainDto mainResponseDto(JSONObject rowArray) {
+        public static ApiMainDto mainResponseDto(JSONObject item, Long recipeId) {
             ApiMainDto dto = ApiMainDto.builder()
-                    .RCP_NM((String) rowArray.get("RCP_NM"))
-                    .ATT_FILE_NO_MAIN((String) rowArray.get("ATT_FILE_NO_MAIN"))
-                    .RCP_PAT2((String) rowArray.get("RCP_PAT2"))
+                    .recipesId(recipeId)
+                    .RCP_NM((String) item.get("RCP_NM"))
+                    .ATT_FILE_NO_MAIN((String) item.get("ATT_FILE_NO_MAIN"))
+                    .RCP_PAT2((String) item.get("RCP_PAT2"))
                     .build();
 
             return dto;
         }
     }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -154,17 +157,9 @@ public class RecipesDto {
         private String RCP_PAT2; // 요리종류
         private String INFO_ENG; // 열량
         private String HASH_TAG; // 해쉬태그
-
-        @JsonIgnore
         private String INFO_CAR; // 탄수화물
-
-        @JsonIgnore
         private String INFO_PRO; // 단백질
-
-        @JsonIgnore
         private String INFO_FAT; // 지방
-
-        @JsonIgnore
         private String INFO_NA; // 나트륨
 
         private String ATT_FILE_NO_MAIN; // 이미지경로(소)
@@ -223,6 +218,10 @@ public class RecipesDto {
                     .RCP_PAT2((String) item.get("RCP_PAT2"))
                     .INFO_ENG((String) item.get("INFO_ENG"))
                     .HASH_TAG((String) item.get("HASH_TAG"))
+                    .INFO_PRO((String) item.get("INFO_PRO"))
+                    .INFO_NA((String) item.get("INFO_NA"))
+                    .INFO_CAR((String) item.get("INFO_CAR"))
+                    .INFO_FAT((String) item.get("INFO_FAT"))
                     .ATT_FILE_NO_MAIN((String) item.get("ATT_FILE_NO_MAIN"))
                     .ATT_FILE_NO_MK((String) item.get("ATT_FILE_NO_MK"))
                     .MANUAL01((String) item.get("MANUAL01"))

@@ -162,15 +162,12 @@ public class RecipesController {
 
             for (int i = 0; i < rowArray.size(); i++) {
                 JSONObject rowObject = (JSONObject) rowArray.get(i);
-                String repNm = (String) rowObject.get("RCP_NM");
-                String attFileNoMain = (String) rowObject.get("ATT_FILE_NO_MAIN");
-                String rcpPat2 = (String) rowObject.get("RCP_PAT2");
+                // String repNm = (String) rowObject.get("RCP_NM");
+                // String attFileNoMain = (String) rowObject.get("ATT_FILE_NO_MAIN");
+                // String rcpPat2 = (String) rowObject.get("RCP_PAT2");
+                Long recipesId = (long) (i + 1); // 일련번호로 recipeId 생성
 
-                RecipesDto.ApiMainDto dto = new RecipesDto.ApiMainDto();
-                dto.setRCP_NM(repNm);
-                dto.setATT_FILE_NO_MAIN(attFileNoMain);
-                dto.setRCP_PAT2(rcpPat2);
-
+                RecipesDto.ApiMainDto dto = RecipesDto.ApiMainDto.mainResponseDto(rowObject, recipesId);
                 result.add(dto);
             }
 
@@ -210,6 +207,10 @@ public class RecipesController {
                 String infoEng = (String) rowObject.get("INFO_ENG");
                 String hasTag = (String) rowObject.get("HASH_TAG");
                 String AttFileNoMk = (String) rowObject.get("ATT_FILE_NO_MAIN");
+                String infoCar = (String) rowObject.get("INFO_CAR");
+                String infoPro = (String) rowObject.get("INFO_PRO");
+                String infoFat = (String) rowObject.get("INFO_FAT");
+                String infoNa = (String) rowObject.get("INFO_NA");
 
                 String manual01 = (String) rowObject.get("MANUAL01");
                 String manualImg01 = (String) rowObject.get("MANUAL_IMG01");
@@ -280,6 +281,10 @@ public class RecipesController {
                 dto.setINFO_ENG(infoEng);
                 dto.setHASH_TAG(hasTag);
                 dto.setATT_FILE_NO_MAIN(AttFileNoMk);
+                dto.setINFO_CAR(infoCar);
+                dto.setINFO_PRO(infoPro);
+                dto.setINFO_NA(infoNa);
+                dto.setINFO_FAT(infoFat);
 
                 dto.setMANUAL01(manual01);
                 dto.setMANUAL_IMG01(manualImg01);
