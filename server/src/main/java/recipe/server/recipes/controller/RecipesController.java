@@ -75,8 +75,6 @@ public class RecipesController {
             imagePath = imageService.uploadAndSaveImage(postDto.getImage());
         }
 
-
-
         Recipes recipes = recipesMapper.recipesPostToRecipes(postDto);
 
         recipes.setImagePath(imagePath);
@@ -312,14 +310,14 @@ public class RecipesController {
 
 
     // 모든 레시피 조회
-//    @GetMapping
-//    public ResponseEntity findAllRecipes(@RequestParam @Positive int pageNumber,
-//                                         @RequestParam @Positive int pageSize) {
-//
-//        Page<Recipes> recipes = recipesService.findAllRecipes(pageNumber, pageSize);
-//        RecipesDto.PageResponseDto pageResponseDto = recipesMapper.recipesPageToPageResponseDto(recipes);
-//        return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity findAllRecipes(@RequestParam @Positive int pageNumber,
+                                         @RequestParam @Positive int pageSize) {
+
+        Page<Recipes> recipes = recipesService.findAllRecipes(pageNumber, pageSize);
+        RecipesDto.PageResponseDto pageResponseDto = recipesMapper.recipesPageToPageResponseDto(recipes);
+        return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
+    }
 
 
     // 레시피 수정 (로그인 시 -> 자신이 작성한 레시피만)
