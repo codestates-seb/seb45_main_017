@@ -1,5 +1,6 @@
 package recipe.server.member.mapper;
 
+import org.springframework.stereotype.Component;
 import recipe.server.member.entity.Member;
 import recipe.server.member.dto.MemberDto;
 

@@ -1,14 +1,17 @@
 package recipe.server.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,12 +20,10 @@ import recipe.server.auth.filter.JwtAuthenticationFilter;
 import recipe.server.auth.filter.JwtVerificationFilter;
 import recipe.server.auth.handler.MemberAuthenticationFailureHandler;
 import recipe.server.auth.handler.MemberAuthenticationSuccessHandler;
-import recipe.server.auth.handler.OAuthLoginFailureHandler;
-import recipe.server.auth.handler.OAuthLoginSuccessHandler;
 import recipe.server.auth.jwt.JwtTokenizer;
 import recipe.server.auth.utils.CustomAuthorityUtils;
+import recipe.server.member.entity.Member;
 import recipe.server.member.repository.MemberRepository;
-import recipe.server.member.service.MemberService;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -34,20 +35,9 @@ import java.util.Arrays;
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
-
     private final CustomAuthorityUtils authorityUtils;
 
     private final MemberRepository memberRepository;
-
-    @Autowired
-    OAuthLoginSuccessHandler oAuthLoginSuccessHandler;
-
-    @Autowired
-    OAuthLoginFailureHandler oAuthLoginFailureHandler;
-
-    // todo 리팩터링
-    @Autowired
-    MemberService memberService;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, MemberRepository memberRepository) {
         this.jwtTokenizer = jwtTokenizer;
@@ -106,23 +96,6 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
-    }
-
-    // todo 리팩터링
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .oauth2Login()
-                .loginPage("/login")
-                .userInfoEndpoint()
-                .userService(memberService)
-                .and()
-                .successHandler(oAuthLoginSuccessHandler)
-                .failureHandler(oAuthLoginFailureHandler);
     }
 
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
