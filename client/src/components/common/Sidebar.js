@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const Container = styled.div`
   position: fixed;
@@ -62,6 +63,8 @@ const Container = styled.div`
 `;
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   let sideState = useSelector((state) => {
     return state.sideState;
   });
@@ -76,7 +79,14 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-menu">
         <div>
-          <span>퀵메뉴 1</span>
+          <span
+            role="presentation"
+            onClick={() => {
+              navigate('/recipe-create');
+            }}
+          >
+            레시피 작성하기
+          </span>
         </div>
         <div>
           <span>퀵메뉴 2</span>
