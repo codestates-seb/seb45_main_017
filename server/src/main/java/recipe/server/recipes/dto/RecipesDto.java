@@ -151,6 +151,7 @@ public class RecipesDto {
     @Builder
     public static class ApiResponseDto {
 
+        private Long recipesId; // 레시피 ID
         private String RCP_NM; // 메뉴명
         private String RCP_WAY2; // 조리방법
         private String RCP_PARTS_DTLS; // 재료정보
@@ -209,9 +210,10 @@ public class RecipesDto {
         private String RCP_NA_TIP; // 저감 조리법 tip
 
         @ElementCollection
-        public static ApiResponseDto makeApiResponseDto(JSONObject item) {
+        public static ApiResponseDto makeApiResponseDto(JSONObject item, Long recipesId) {
 
             ApiResponseDto dto = ApiResponseDto.builder()
+                    .recipesId(recipesId)
                     .RCP_NM((String) item.get("RCP_NM"))
                     .RCP_WAY2((String) item.get("RCP_WAY2"))
                     .RCP_PARTS_DTLS((String) item.get("RCP_PARTS_DTLS"))
