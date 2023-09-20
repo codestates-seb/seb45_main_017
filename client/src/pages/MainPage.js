@@ -5,9 +5,28 @@ import Category from '../components/MainPageCompo/Category';
 import MainList from '../components/MainPageCompo/MainList';
 import Paging from '../components/MainPageCompo/Paging';
 import Search from '../components/MainPageCompo/Search';
+import Header from '../components/common/Header';
 import { useParams } from 'react-router-dom';
 
 const PageContainer = styled.div``;
+const PageDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 40px;
+`;
+const PageP = styled.p`
+  font-weight: bolder;
+  width: 250px;
+  height: 25px;
+  margin-right: 1100px;
+  white-space: nowrap;
+`;
+const LargeText = styled.span`
+  font-size: 50px;
+  font-weight: bold;
+  color: skyblue;
+`;
 
 function MainPage() {
   const [data, setData] = useState([]); // API로 받아온 모든 데이터
@@ -49,10 +68,21 @@ function MainPage() {
     [],
   );
 
+  const config = {
+    headers: {
+      'Content-Type': `application/json`,
+      'ngrok-skip-browser-warning': '69420',
+    },
+  };
+
   const fetchData = async () => {
     try {
-      const response = await axios.get(``);
-      setData(response.data.COOKRCP01.row);
+      const response = await axios.get(
+        `https://619b-45-64-144-244.ngrok-free.app/recipes/main`,
+        config,
+      );
+      setData(response.data);
+      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -67,8 +97,8 @@ function MainPage() {
       setFilterData(data);
     } else {
       setFilterData(
-        data.filter((el) => {
-          return el.RCP_PAT2 === obj.name;
+        Object.values(data).filter((el) => {
+          return el.rcp_PAT2 === obj.name;
         }),
       );
     }
@@ -80,11 +110,11 @@ function MainPage() {
     setSearchData(typing);
 
     setFilterData(
-      data.filter((el) => {
+      Object.values(data).filter((el) => {
         return obj.name === '전체'
-          ? el.RCP_NM.toLowerCase().includes(typing)
-          : el.RCP_NM.toLowerCase().includes(typing) &&
-              el.RCP_PAT2 === obj.name;
+          ? el.rcp_NM.toLowerCase().includes(typing)
+          : el.rcp_NM.toLowerCase().includes(typing) &&
+              el.rcp_PAT2 === obj.name;
       }),
     );
   };
@@ -99,8 +129,15 @@ function MainPage() {
 
   return (
     <PageContainer>
+      <Header />
       <Search searchData={searchData} HandleOnSearch={HandleOnSearch} />
       <Category menu={menu} obj={obj} setSearchData={setSearchData}></Category>
+      <PageDiv>
+        <PageP>
+          총 <LargeText>{filterData.length}</LargeText> 개의 맛있는 레시피가
+          있습니다.
+        </PageP>
+      </PageDiv>
       <MainList currentData={currentData}></MainList>
       <Paging filterData={filterData} obj={obj} />
     </PageContainer>

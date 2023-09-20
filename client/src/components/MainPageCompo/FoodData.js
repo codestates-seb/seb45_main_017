@@ -11,16 +11,19 @@ const Picture = styled.img`
 `;
 
 const FoodName = styled.h3`
+  display: flex;
+  justify-content: center;
   width: 300px;
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: bolder;
   margin: 5px 0px 20px 3px;
 `;
 
 // 리스트에 나오는 한칸의 내용
-function FoodData({ picture, title }) {
+function FoodData({ picture, title, id }) {
   return (
     <ListLi>
-      <Link>
+      <Link to={`/recipe-des/${id}`}>
         <Picture src={picture} alt="product picture" />
       </Link>
       <FoodName>{title}</FoodName>
@@ -31,5 +34,6 @@ function FoodData({ picture, title }) {
 FoodData.propTypes = {
   picture: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 export default FoodData;
