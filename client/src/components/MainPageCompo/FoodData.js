@@ -11,9 +11,12 @@ const Picture = styled.img`
 `;
 
 const FoodName = styled.h3`
+  display: flex;
+  justify-content: center;
   width: 300px;
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: bolder;
+
   margin: 5px 0px 20px 3px;
 `;
 

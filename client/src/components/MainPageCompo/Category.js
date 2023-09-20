@@ -33,6 +33,7 @@ const CaImg = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 100px;
+  margin-bottom: 10px;
   cursor: pointer;
 `;
 

@@ -9,6 +9,24 @@ import Header from '../components/common/Header';
 import { useParams } from 'react-router-dom';
 
 const PageContainer = styled.div``;
+const PageDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 40px;
+`;
+const PageP = styled.p`
+  font-weight: bolder;
+  width: 250px;
+  height: 25px;
+  margin-right: 1100px;
+  white-space: nowrap;
+`;
+const LargeText = styled.span`
+  font-size: 50px;
+  font-weight: bold;
+  color: skyblue;
+`;
 
 function MainPage() {
   const [data, setData] = useState([]); // API로 받아온 모든 데이터
@@ -60,8 +78,7 @@ function MainPage() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://33fe-45-64-145-74.ngrok-free.app/recipes/main`,
-        config,
+        `https://619b-45-64-144-244.ngrok-free.app/recipes/main`,
       );
       setData(response.data);
       console.log(data);
@@ -114,6 +131,12 @@ function MainPage() {
       <Header />
       <Search searchData={searchData} HandleOnSearch={HandleOnSearch} />
       <Category menu={menu} obj={obj} setSearchData={setSearchData}></Category>
+      <PageDiv>
+        <PageP>
+          총 <LargeText>{filterData.length}</LargeText> 개의 맛있는 레시피가
+          있습니다.
+        </PageP>
+      </PageDiv>
       <MainList currentData={currentData}></MainList>
       <Paging filterData={filterData} obj={obj} />
     </PageContainer>
