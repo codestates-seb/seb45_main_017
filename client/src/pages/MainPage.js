@@ -79,7 +79,6 @@ function MainPage() {
     try {
       const response = await axios.get(
         `https://619b-45-64-144-244.ngrok-free.app/recipes/main`,
-        config,
       );
       setData(response.data);
       console.log(data);
