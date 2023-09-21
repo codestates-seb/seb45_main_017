@@ -228,9 +228,9 @@ const EditRecipe = () => {
       formData.append('file', recipeData.selectedImage);
     }
 
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const url = process.env.REACT_APP_API_URL;
     try {
-      await axios.patch(`${apiUrl}/recipes/${id}`, formData, {
+      await axios.patch(`${url}/recipes/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -230,6 +230,8 @@ const RecipeDes = () => {
 
   const { id } = useParams();
 
+  const url = process.env.REACT_APP_API_URL;
+
   const navigate = useNavigate();
 
   const handleEditButtonClick = () => {
@@ -237,11 +239,9 @@ const RecipeDes = () => {
   };
   //댓글 삭제
 
-  const apiUrl = 'https://619b-45-64-144-244.ngrok-free.app';
-
   const handleDeleteComment = (comment) => {
     axios
-      .delete(`${apiUrl}/recipes/${id}/comment/1`)
+      .delete(`${url}/recipes/${id}/comment/1`)
       .then(() => {
         const updatedComments = comments.filter((c) => c.id !== comment.id);
         setComments(updatedComments);
@@ -258,7 +258,7 @@ const RecipeDes = () => {
   const handleSaveComment = (editedComment) => {
     // 댓글 수정
     axios
-      .patch(`${apiUrl}/recipes/${id}/comment/1`, {
+      .patch(`${url}/recipes/${id}/comment/1`, {
         content: editedComment.content,
       })
       .then(() => {
@@ -282,7 +282,7 @@ const RecipeDes = () => {
     //댓글 작성
     if (newComment.trim() !== '') {
       axios
-        .post(`${apiUrl}/recipes/${id}/comment`, {
+        .post(`${url}/recipes/${id}/comment`, {
           content: newComment,
         })
         .then((response) => {
@@ -301,10 +301,8 @@ const RecipeDes = () => {
   };
 
   useEffect(() => {
-    const apiUrl = `https://619b-45-64-144-244.ngrok-free.app/recipes/main/${id}`;
-
     axios
-      .get(apiUrl, { headers })
+      .get(`${url}/recipes/main/${id}`, { headers })
       .then((response) => {
         const recipeData = response.data;
         setRecipe(recipeData);
@@ -318,7 +316,7 @@ const RecipeDes = () => {
 
   const handleDeleteRecipe = () => {
     axios
-      .delete(apiUrl)
+      .delete(`${url}/recipes/main/${id}`)
       .then((response) => {
         console.log('Recipe deleted successfully');
         setRecipe({});
@@ -343,7 +341,7 @@ const RecipeDes = () => {
   const handleToggleLike = () => {
     if (!isLiked) {
       axios
-        .post(`${apiUrl}/recipes`)
+        .post(`${url}/recipes`)
         .then(() => {
           setIsLiked(true);
         })
@@ -352,7 +350,7 @@ const RecipeDes = () => {
         });
     } else {
       axios
-        .delete(`${apiUrl}/recipes/${id}`)
+        .delete(`${url}/recipes/${id}`)
         .then(() => {
           setIsLiked(false);
         })
