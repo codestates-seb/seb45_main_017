@@ -10,6 +10,7 @@ const InputContainer = styled.div`
   justify-content: center;
   width: 100%;
   align-items: center;
+  margin-top: 30px;
   .postBtn {
     margin-bottom: 30px;
   }
@@ -210,7 +211,7 @@ const CreateRecipe = () => {
     recipeData.append('recipeBody', cookingMethod);
     recipeData.append('image', selectedImage);
 
-    const apiUrl = 'https://33fe-45-64-145-74.ngrok-free.app';
+    const apiUrl = 'https://7584-119-69-252-33.ngrok-free.app';
 
     try {
       const response = await axios.post(`${apiUrl}/recipes`, recipeData, {
@@ -227,7 +228,7 @@ const CreateRecipe = () => {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <InputContainer>
         <div className="Crtitle">레시피 작성하기</div>
         <div className="recipe-form">

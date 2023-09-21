@@ -165,7 +165,7 @@ const EditRecipe = () => {
   useEffect(() => {
     const apiUrl = process.env.REACT_APP_API_URL;
     axios
-      .get(`${apiUrl}/recipes/1`)
+      .get(`${apiUrl}/recipes/${id}`)
       .then((response) => {
         const {
           recipeName,
@@ -230,12 +230,12 @@ const EditRecipe = () => {
 
     const apiUrl = process.env.REACT_APP_API_URL;
     try {
-      await axios.patch(`${apiUrl}/recipes/1`, formData, {
+      await axios.patch(`${apiUrl}/recipes/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      navigate(`/recipes-des/1`);
+      navigate(`/recipes-des/${id}`);
     } catch (error) {
       console.error('Error updating recipe:', error);
     }
