@@ -23,8 +23,8 @@ function MainList({ currentData }) {
         {Object.values(currentData).map((el) => {
           return (
             <FoodData
-              key={el.recipeId}
-              id={el.recipeId}
+              key={el.recipesId}
+              id={el.recipesId}
               picture={el.att_FILE_NO_MAIN}
               title={el.rcp_NM} //el.recipeTitle
             ></FoodData>

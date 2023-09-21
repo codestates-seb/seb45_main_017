@@ -47,6 +47,9 @@ function Paging({ filterData, obj }) {
   const navigator = useNavigate();
 
   const handlePageChange = (page) => {
+    if (obj.name === undefined) {
+      obj.name = '전체';
+    }
     obj.page = page;
     navigator(`/recipes/${obj.name}/${page}`);
   };
