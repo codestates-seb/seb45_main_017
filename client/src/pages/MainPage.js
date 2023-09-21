@@ -71,9 +71,12 @@ function MainPage() {
   };
 
   const fetchData = async () => {
+    const url = process.env.REACT_APP_API_URL;
     try {
-      const response = await axios.get(`recipes/main`, config);
+      const response = await axios.get(`${url}/recipes/main`, config);
       setData(response.data);
+
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

@@ -61,13 +61,11 @@ const SignForm = () => {
   };
 
   const onValid = async ({ username, email, password }) => {
+    const url = process.env.REACT_APP_API_URL;
     try {
       const formData = { username, email, password };
       console.log(formData);
-      await axios.post(
-        'https://50e2-119-69-252-33.ngrok-free.app/member',
-        formData,
-      );
+      await axios.post(`${url}/member`, formData);
       navigate('/login');
     } catch (error) {
       alert('이미 존재하는 아이디입니다.');

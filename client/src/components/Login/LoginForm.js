@@ -54,11 +54,10 @@ const LoginForm = () => {
 
   // 로그인 폼 제출 시 작동 함수
   const onValid = async (formData) => {
+    const url = process.env.REACT_APP_API_URL;
+
     try {
-      const res = await axios.post(
-        'https://50e2-119-69-252-33.ngrok-free.app/login',
-        formData,
-      );
+      const res = await axios.post(`${url}/login`, formData);
       const { access_token, refresh_token, expires } = res.data;
       SaveCookies(access_token, refresh_token, expires);
 

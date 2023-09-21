@@ -211,10 +211,10 @@ const CreateRecipe = () => {
     recipeData.append('recipeBody', cookingMethod);
     recipeData.append('image', selectedImage);
 
-    const apiUrl = 'https://7584-119-69-252-33.ngrok-free.app';
+    const url = process.env.REACT_APP_API_URL;
 
     try {
-      const response = await axios.post(`${apiUrl}/recipes`, recipeData, {
+      const response = await axios.post(`${url}/recipes`, recipeData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
