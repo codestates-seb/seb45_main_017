@@ -214,13 +214,13 @@ const CreateRecipe = () => {
     const apiUrl = 'https://7584-119-69-252-33.ngrok-free.app';
 
     try {
-      const response = await axios.post(`${apiUrl}/recipes`, recipeData, {
+      const response = await axios.post(`${apiUrl}/`, recipeData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       console.log('Recipe created:', response.data);
-      navigate('/recipes');
+      navigate('/');
     } catch (error) {
       console.error('Error creating recipe:', error);
     }

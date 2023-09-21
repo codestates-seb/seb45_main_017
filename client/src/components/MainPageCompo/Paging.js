@@ -51,7 +51,7 @@ function Paging({ filterData, obj }) {
       obj.name = '전체';
     }
     obj.page = page;
-    navigator(`/recipes/${obj.name}/${page}`);
+    navigator(`/${obj.name}/${page}`);
   };
   return (
     <PaginationBox>
