@@ -143,7 +143,6 @@ public class RecipesController {
     }
 
     // 레시피 조회 -> 오픈 api 가져오기 (여러 레시피 보여주기)
-
     @GetMapping("/main")
     public ResponseEntity<List<RecipesDto.ApiMainDto>> fetch() {
         RestTemplate restTemplate = new RestTemplate();
@@ -160,14 +159,11 @@ public class RecipesController {
             JSONObject cookRcp01 = (JSONObject) jsonObject.get("COOKRCP01");
             JSONArray rowArray = (JSONArray) cookRcp01.get("row");
 
-            for (int i = 0; i < rowArray.size(); i++) {
-                JSONObject rowObject = (JSONObject) rowArray.get(i);
-                // String repNm = (String) rowObject.get("RCP_NM");
-                // String attFileNoMain = (String) rowObject.get("ATT_FILE_NO_MAIN");
-                // String rcpPat2 = (String) rowObject.get("RCP_PAT2");
-                String recipesIdStr = (String) rowObject.get("RCP_SEQ"); // RCP_SEQ 값을 문자열로 가져옴
-                Long recipesId = Long.parseLong(recipesIdStr);
+            for (int i = 0; i <= rowArray.size(); i++) {
 
+                JSONObject rowObject = (JSONObject) rowArray.get(i);
+
+                Long recipesId = (long) (i+1);
                 RecipesDto.ApiMainDto dto = RecipesDto.ApiMainDto.mainResponseDto(rowObject, recipesId);
                 result.add(dto);
             }
@@ -185,7 +181,7 @@ public class RecipesController {
     @GetMapping("/main/{recipesId}")
     public ResponseEntity<RecipesDto.ApiResponseDto> fetchRecipeById(@PathVariable Long recipesId) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://openapi.foodsafetykorea.go.kr/api/" + apikey + "/COOKRCP01/json/1/100?RCP_SEQ=" + recipesId;
+        String url = "https://openapi.foodsafetykorea.go.kr/api/" + apikey + "/COOKRCP01/json/"+  recipesId +"/"+ recipesId;
 
         // API에서 JSON 데이터 가져오기
         String jsonString = restTemplate.getForObject(url, String.class);

@@ -22,11 +22,11 @@ email:
     admin: admin@gmail.com
 
 jwt:
-  key: ${jwt.key}
+  key: codestatessxxljxxxdafjklewklfkdlsnwfkelsfe3fedswfdsjdde
   access-token-expiration-minutes: 300
   refresh-token-expiration-minutes: 600
 
 recipes:
-  openapi-key: ${recipes.openapi-key}
+  openapi-key: e907859720c24072b3be
 
 

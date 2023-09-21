@@ -18,7 +18,7 @@ public class Recipes {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long recipesId;
+    private Long recipesId;
 
     // 레시피 제목
     @Column(nullable = false)
@@ -71,7 +71,7 @@ public class Recipes {
         return recipesId;
     }
 
-    public void setRecipesId(long recipesId) {
+    public void setRecipesId(Long recipesId) {
 
         this.recipesId = recipesId;
     }
