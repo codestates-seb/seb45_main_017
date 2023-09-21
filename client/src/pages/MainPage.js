@@ -36,11 +36,6 @@ function MainPage() {
 
   //카테고리, 페이지 값 저장
   const obj = useParams();
-  console.log(obj);
-  console.log(obj.page);
-  console.log(currentData);
-  console.log(filterData);
-  console.log(data);
 
   const start =
     obj.page === undefined ? 0 : obj.page === 'page' ? 0 : (obj.page - 1) * 12;
@@ -79,7 +74,6 @@ function MainPage() {
     try {
       const response = await axios.get(`recipes/main`, config);
       setData(response.data);
-      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

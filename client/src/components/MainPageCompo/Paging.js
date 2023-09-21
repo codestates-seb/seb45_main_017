@@ -7,7 +7,7 @@ const PaginationBox = styled.div`
   .pagination {
     display: flex;
     justify-content: center;
-    margin: 20px 0px 50px 0px;
+    margin: 20px 0px 100px 0px;
   }
   ul {
     list-style: none;
@@ -47,6 +47,9 @@ function Paging({ filterData, obj }) {
   const navigator = useNavigate();
 
   const handlePageChange = (page) => {
+    if (obj.name === undefined) {
+      obj.name = '전체';
+    }
     obj.page = page;
     navigator(`/recipes/${obj.name}/${page}`);
   };
