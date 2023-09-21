@@ -66,7 +66,7 @@ function Category({ menu, obj, setSearchData }) {
               active={color === index}
               onClick={() => HandleClickIndex(index)}
             >
-              <Link to={`/recipes/${menu[index].name}/${1}`}>
+              <Link to={`/${menu[index].name}/${1}`}>
                 <LiBox>
                   <CaImg key={el.id} src={el.picture} alt={`image ${el.id}`} />
                 </LiBox>

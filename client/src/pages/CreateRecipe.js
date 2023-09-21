@@ -220,7 +220,7 @@ const CreateRecipe = () => {
         },
       });
       console.log('Recipe created:', response.data);
-      navigate('/recipes');
+      navigate('/');
     } catch (error) {
       console.error('Error creating recipe:', error);
     }

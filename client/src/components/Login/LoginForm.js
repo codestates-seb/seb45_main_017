@@ -62,7 +62,7 @@ const LoginForm = () => {
       const { access_token, refresh_token, expires } = res.data;
       SaveCookies(access_token, refresh_token, expires);
 
-      navigate('/recipes');
+      navigate('/');
     } catch (error) {
       alert('입력한 아이디 혹은 비밀번호가 올바른지 확인해주십시요');
       console.log(error);

@@ -23,5 +23,5 @@ export const getNaverToken = async (code) => {
   const res = await axios.post('Backend_Naver_API', code);
   const { access_token, refresh_token, expires } = res.data;
   saveCookies(access_token, refresh_token, expires);
-  redirect('/recipes');
+  redirect('/');
 };
