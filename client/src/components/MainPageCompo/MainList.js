@@ -23,9 +23,10 @@ function MainList({ currentData }) {
         {Object.values(currentData).map((el) => {
           return (
             <FoodData
-              key={el.RCP_SEQ}
-              picture={el.ATT_FILE_NO_MAIN}
-              title={el.RCP_NM}
+              key={el.recipeId}
+              id={el.recipeId}
+              picture={el.att_FILE_NO_MAIN}
+              title={el.rcp_NM} //el.recipeTitle
             ></FoodData>
           );
         })}

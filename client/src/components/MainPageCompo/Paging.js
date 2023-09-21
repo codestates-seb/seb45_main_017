@@ -7,7 +7,7 @@ const PaginationBox = styled.div`
   .pagination {
     display: flex;
     justify-content: center;
-    margin: 20px 0px 50px 0px;
+    margin: 20px 0px 100px 0px;
   }
   ul {
     list-style: none;
