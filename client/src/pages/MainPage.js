@@ -77,9 +77,7 @@ function MainPage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `https://619b-45-64-144-244.ngrok-free.app/recipes/main`,
-      );
+      const response = await axios.get(`recipes/main`, config);
       setData(response.data);
       console.log(data);
     } catch (error) {
@@ -137,7 +135,10 @@ function MainPage() {
           있습니다.
         </PageP>
       </PageDiv>
-      <MainList currentData={currentData}></MainList>
+      {filterData.length === 0 ? null : (
+        <MainList currentData={currentData}></MainList>
+      )}
+
       <Paging filterData={filterData} obj={obj} />
     </PageContainer>
   );
