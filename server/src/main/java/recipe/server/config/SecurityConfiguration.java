@@ -7,23 +7,44 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+<<<<<<< HEAD
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+=======
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+>>>>>>> origin/be
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import recipe.server.auth.filter.JwtAuthenticationFilter;
 import recipe.server.auth.filter.JwtVerificationFilter;
+<<<<<<< HEAD
 import recipe.server.auth.handler.*;
 import recipe.server.auth.jwt.JwtTokenizer;
 import recipe.server.auth.utils.CustomAuthorityUtils;
+=======
+import recipe.server.auth.handler.MemberAuthenticationFailureHandler;
+import recipe.server.auth.handler.MemberAuthenticationSuccessHandler;
+import recipe.server.auth.jwt.JwtTokenizer;
+import recipe.server.auth.utils.CustomAuthorityUtils;
+import recipe.server.member.entity.Member;
+>>>>>>> origin/be
 import recipe.server.member.repository.MemberRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.Arrays;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/be
 @Configuration
 public class SecurityConfiguration {
 

@@ -1,5 +1,6 @@
 package recipe.server.member.mapper;
 
+<<<<<<< HEAD
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import recipe.server.member.entity.Member;
@@ -10,4 +11,13 @@ public interface MemberMapper {
     Member memberPostDtoToMember(MemberDto.MemberPostDto requestBody);
     Member memberPatchDtoToMember(MemberDto.MemberPatchDto requestBody);
     MemberDto.MemberResponseDto memberToMemberResponse(Member member);
+=======
+import recipe.server.member.entity.Member;
+import recipe.server.member.dto.MemberDto;
+
+public interface MemberMapper {
+    Member memberPostDtoToMember(MemberDto.MemberPostDto requestBody);
+    Member memberPatchDtoToMember(MemberDto.MemberPatchDto requestBody);
+    MemberDto.MemberResponseDto memberToMemberResponseDto(Member member);
+>>>>>>> origin/be
 }
